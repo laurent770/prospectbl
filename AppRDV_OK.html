@@ -8,9 +8,9 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#f4f6fa;
+  --bg:#eef2f7;
   --surface:#ffffff;
-  --surface2:#f8f9fc;
+  --surface2:#f5f7fc;
   --border:#e8ecf4;
   --text:#0d1117;
   --text2:#6b7a99;
@@ -75,22 +75,22 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 .back-btn:hover{color:rgba(255,255,255,0.6)}
 
 /* ===== TOPBAR ===== */
-#topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 20px;display:none;align-items:center;gap:16px;height:70px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow-sm)}
+#topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 20px;display:none;align-items:center;gap:16px;height:76px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow-sm)}
 #logo{font-size:20px;font-weight:700;color:var(--accent);flex-shrink:0;letter-spacing:-0.3px}
 #logo span{color:var(--text)}
 
 #statbar{display:flex;gap:8px;flex:1;overflow-x:auto}
-.stat{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 14px;display:flex;flex-direction:column;align-items:center;min-width:75px;position:relative;cursor:default;flex-shrink:0;transition:all 0.2s}
+.stat{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 16px;display:flex;flex-direction:column;align-items:center;min-width:80px;position:relative;cursor:default;flex-shrink:0;transition:all 0.2s}
 .stat:hover{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light)}
-.stat .snum{font-size:22px;font-weight:700;line-height:1;font-family:'DM Mono',monospace}
-.stat .slabel{font-size:9px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;margin-top:2px}
+.stat .snum{font-size:26px;font-weight:700;line-height:1;font-family:'DM Mono',monospace}
+.stat .slabel{font-size:9px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;margin-top:3px}
 .stat.s-total{border-color:#c5cae9}.stat.s-total .snum{color:var(--accent)}
-.stat.s-rdv{border-color:#b2dfdb}.stat.s-rdv .snum{color:var(--green)}
-.stat.s-rdv-br{border-color:#bbdefb}.stat.s-rdv-br .snum{color:#1976d2}
-.stat.s-rdv-le{border-color:#e1bee7}.stat.s-rdv-le .snum{color:var(--purple)}
+.stat.s-rdv{border-color:#b2dfdb;background:#f0fdf4}.stat.s-rdv .snum{color:var(--green)}
+.stat.s-rdv-br{border-color:#bbdefb;background:#eff6ff}.stat.s-rdv-br .snum{color:#1976d2}
+.stat.s-rdv-le{border-color:#e1bee7;background:#faf5ff}.stat.s-rdv-le .snum{color:var(--purple)}
 .stat.s-sign{border-color:#d1c4e9}.stat.s-sign .snum{color:var(--purple)}
-.stat.s-rappel{border-color:#ffe0b2}.stat.s-rappel .snum{color:var(--orange)}
-.stat.s-nrp{border-color:#ffcdd2}.stat.s-nrp .snum{color:var(--red)}
+.stat.s-rappel{border-color:#ffe0b2;background:#fff8f0}.stat.s-rappel .snum{color:var(--orange)}
+.stat.s-nrp{border-color:#ffcdd2;background:#fff5f5}.stat.s-nrp .snum{color:var(--red)}
 .stat.s-ni .snum{color:var(--text3)}
 
 .stat-tooltip{display:none;position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);background:var(--text);color:#fff;border-radius:var(--radius-sm);padding:12px 16px;min-width:240px;max-width:300px;z-index:500;font-size:12px;box-shadow:var(--shadow-lg)}
@@ -137,7 +137,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 .cinfo{flex:1;min-width:0}
 .cname{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
 .ctel{font-size:11px;color:var(--text2);font-family:'DM Mono',monospace;margin-top:1px}
-.cfamille{font-size:10px;color:var(--purple);font-weight:500;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cfamille{font-size:11px;color:var(--purple);font-weight:700;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:var(--purple-light);padding:2px 6px;border-radius:6px;display:inline-block}
 .cstatus{flex-shrink:0}
 .badge{font-size:9px;font-weight:700;padding:3px 7px;border-radius:20px;text-transform:uppercase;letter-spacing:0.4px;white-space:nowrap}
 .badge-rdv{background:#e6fcf5;color:#0ca678}
@@ -210,19 +210,24 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 .sbtn-ni{background:var(--surface2);color:var(--text2)}.sbtn-ni.active,.sbtn-ni:hover{background:var(--text2);color:#fff}
 
 /* KEY INFO ROW */
-.key-info-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.key-info-card{background:var(--surface2);border-radius:var(--radius-sm);padding:12px 14px;border:1px solid var(--border)}
-.ki-label{font-size:9px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px}
+.key-info-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.key-info-card{background:var(--surface2);border-radius:var(--radius-sm);padding:14px 16px;border:1px solid var(--border);transition:all 0.2s}
+.key-info-card:hover{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light)}
+.key-info-card.card-tel{background:linear-gradient(135deg,#eef2ff,#e0e7ff);border-color:#c7d2fe}
+.key-info-card.card-compagnie{background:linear-gradient(135deg,#e6fcf5,#d3f9d8);border-color:#99e9c8}
+.key-info-card.card-ddn{background:linear-gradient(135deg,#fff4e6,#ffe8cc);border-color:#ffc078}
+.ki-label{font-size:9px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px}
 .ki-value{font-size:15px;font-weight:600;color:var(--text)}
-.ki-value.phone{color:var(--accent);font-family:'DM Mono',monospace;font-size:16px;font-weight:700}
+.ki-value.phone{color:#3b5bdb;font-family:'DM Mono',monospace;font-size:18px;font-weight:800}
 .ki-value.empty{color:var(--text3);font-style:italic;font-size:13px;font-weight:400}
-.ki-value.big{font-size:17px}
+.ki-value.big{font-size:18px;font-weight:700;color:#0ca678}
+.ki-value.ddn-val{font-size:20px;font-weight:800;color:#f76707;font-family:'DM Mono',monospace;letter-spacing:1px}
 
 /* SECTIONS */
 .section{background:var(--surface);border-radius:var(--radius);padding:18px 20px;margin-bottom:12px;box-shadow:var(--shadow-sm);border:1px solid var(--border)}
 .section-header{display:flex;align-items:center;gap:8px;margin-bottom:14px}
-.section-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
-.section-title{font-size:12px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:0.6px}
+.section-icon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.section-title{font-size:12px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:0.8px}
 .section-divider{flex:1;height:1px;background:var(--border)}
 
 .fields-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
@@ -258,7 +263,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 .rf-label{font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
 .rf-input{width:100%;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:9px 11px;font-size:13px;font-family:inherit;background:var(--surface2);color:var(--text);outline:none;transition:all 0.15s}
 .rf-input:focus{border-color:var(--accent);background:var(--surface);box-shadow:0 0 0 3px var(--accent-light)}
-.rf-textarea{width:100%;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:9px 11px;font-size:13px;font-family:inherit;background:var(--surface2);color:var(--text);outline:none;transition:all 0.15s;resize:vertical;min-height:70px;grid-column:1/-1}
+.rf-textarea{width:100%;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:9px 11px;font-size:13px;font-family:inherit;background:var(--surface2);color:var(--text);outline:none;transition:all 0.15s;resize:vertical;min-height:76px;grid-column:1/-1}
 .rf-textarea:focus{border-color:var(--accent);background:var(--surface);box-shadow:0 0 0 3px var(--accent-light)}
 .save-rdv-btn{width:100%;background:var(--accent);color:#fff;border:none;border-radius:var(--radius-sm);padding:11px 20px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.2s;letter-spacing:0.3px}
 .save-rdv-btn:hover{background:#2f4ac7;box-shadow:0 4px 16px rgba(59,91,219,0.3);transform:translateY(-1px)}
@@ -417,17 +422,17 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
         </div>
         <!-- CLE EN UN COUP D'OEIL -->
         <div class="key-info-row">
-          <div class="key-info-card">
+          <div class="key-info-card card-tel">
             <div class="ki-label">Telephone principal</div>
             <div class="ki-value phone" id="ki-tel"></div>
           </div>
-          <div class="key-info-card">
+          <div class="key-info-card card-compagnie">
             <div class="ki-label">Compagnie</div>
             <div class="ki-value big" id="ki-compagnie"></div>
           </div>
-          <div class="key-info-card">
+          <div class="key-info-card card-ddn">
             <div class="ki-label">Date de naissance</div>
-            <div class="ki-value" id="ki-ddn"></div>
+            <div class="ki-value ddn-val" id="ki-ddn"></div>
           </div>
         </div>
       </div>
@@ -651,7 +656,7 @@ function renderList(){
     const famNoms=hasFam?gids.filter(g=>g!==c.id).map(g=>{const m=allContacts.find(x=>x.id===g);return m?((m.prenom||'')+' '+(m.nom||'')).trim():''}).filter(Boolean).join(', '):'';
     const bmap={'signe':'Signe','rappel':'Rappel','nrp1':'NRP1','nrp2':'NRP2','nrp3':'NRP3+','ni':'Pas int.','rdv':'RDV'};
     const badge=c.statut&&bmap[c.statut]?`<span class="badge badge-${c.statut}">${bmap[c.statut]}</span>`:'';
-    div.innerHTML=`<div class="cavatar" style="background:${col}">${ini}</div><div class="cinfo"><div class="cname">${c.prenom||''} ${c.nom||''}${hasFam?` <span style="font-size:9px;color:#7048e8;font-weight:700">Fam.${gids.length}</span>`:''}</div><div class="ctel">${tel}</div>${famNoms?`<div class="cfamille">${famNoms}</div>`:''}</div><div class="cstatus">${badge}</div>`;
+    div.innerHTML=`<div class="cavatar" style="background:${col}">${ini}</div><div class="cinfo"><div class="cname">${c.prenom||''} ${c.nom||''}${hasFam?` <span style="font-size:11px;color:#7048e8;font-weight:800;background:#f3f0ff;padding:1px 6px;border-radius:6px">Fam.${gids.length}</span>`:''}</div><div class="ctel">${tel}</div>${famNoms?`<div class="cfamille">${famNoms}</div>`:''}</div><div class="cstatus">${badge}</div>`;
     div.onclick=()=>selectContact(c);list.appendChild(div);
   }
 }
@@ -666,14 +671,14 @@ function selectContact(c){
 
   // KEY INFO
   const tel=fv(c.tel1)||fv(c.tel2)||fv(c.telm);
-  setKI('ki-tel',tel,'phone');setKI('ki-compagnie',c.compagnie,'');setKI('ki-ddn',c.dateNaissance,'');
+  setKI('ki-tel',tel,'phone');setKI('ki-compagnie',c.compagnie,'');setKI('ki-ddn',formatDate(c.dateNaissance),'');
 
   function setKI(id,v,cls){const el=document.getElementById(id);if(!el)return;const val=fv(v);el.textContent=val||'-';el.className='ki-value'+(val?'':' empty')+(cls?' '+cls:'');}
   function sv(id,v,cls=''){const el=document.getElementById(id);if(!el)return;const val=fv(v);el.textContent=val||'-';el.className='field-value'+(val?'':' empty')+(cls?' '+cls:'');}
 
   sv('d-tel1',c.tel1,'phone');sv('d-tel2',c.tel2,'phone');sv('d-telm',c.telm,'phone');
-  sv('d-adr1',c.adresse1);sv('d-adr2',c.adresse2);sv('d-cp',c.cp);sv('d-ville',c.ville);sv('d-cpville',c.cpVille);sv('d-ddn',c.dateNaissance);
-  sv('d-compagnie',c.compagnie,'highlight');sv('d-garantie',c.garantie);sv('d-cotisation',c.cotisation);sv('d-ncontrat',c.nContrat);sv('d-produit',c.produit);sv('d-tarif',c.tarif);sv('d-effet',c.dateEffet);sv('d-signature',c.dateSignature);sv('d-statutcontrat',c.statutContrat);
+  sv('d-adr1',c.adresse1);sv('d-adr2',c.adresse2);sv('d-cp',c.cp);sv('d-ville',c.ville);sv('d-cpville',c.cpVille);sv('d-ddn',c.dateNaissance,'date');
+  sv('d-compagnie',c.compagnie,'highlight');sv('d-garantie',c.garantie);sv('d-cotisation',c.cotisation);sv('d-ncontrat',c.nContrat);sv('d-produit',c.produit);sv('d-tarif',c.tarif);sv('d-effet',c.dateEffet,'date');sv('d-signature',c.dateSignature,'date');sv('d-statutcontrat',c.statutContrat);
   sv('d-iban',c.iban);sv('d-bic',c.bic);sv('d-banque',c.banque);
   sv('d-conseiller',c.conseiller);sv('d-source2',c.source);sv('d-id1',c.identifiant1);sv('d-id2',c.identifiant2);sv('d-type',c.type);sv('d-categorie',c.categorie);sv('d-montant',c.montant);sv('d-periode',c.periode);sv('d-fichier',c.fichierSource);
 
