@@ -124,6 +124,17 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);font
 .save-rdv-btn:hover{background:var(--accent2)}
 .save-rdv-btn:active{transform:scale(0.98)}
 
+/* FAMILLE */
+.famille-card{background:linear-gradient(135deg,#eff6ff,#f0fdf4);border:2px solid #bfdbfe;border-radius:var(--radius);padding:16px 20px;margin-bottom:16px;box-shadow:var(--shadow)}
+.famille-title{font-size:13px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.famille-members{display:flex;flex-direction:column;gap:8px}
+.fmember{background:#fff;border:1.5px solid #bfdbfe;border-radius:10px;padding:12px 16px;cursor:pointer;transition:all 0.15s}
+.fmember:hover{border-color:var(--accent);background:#eff6ff}
+.fmember-name{font-size:15px;font-weight:700;color:var(--text)}
+.fmember-details{font-size:13px;color:var(--text2);margin-top:4px;display:flex;gap:12px;flex-wrap:wrap}
+.fmember-detail{display:flex;gap:4px;align-items:center}
+.citem.is-famille::after{content:'ðŸ‘¨â€ðŸ‘©â€ðŸ‘§';font-size:11px;margin-left:4px}
+
 /* TOAST */
 #toast{position:fixed;bottom:24px;right:24px;background:#1a2233;color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:700;z-index:9999;opacity:0;transform:translateY(10px);transition:all 0.3s;pointer-events:none}
 #toast.show{opacity:1;transform:translateY(0)}
@@ -246,6 +257,12 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);font
         </div>
       </div>
 
+      <!-- FAMILLE -->
+      <div class="famille-card" id="famille-card" style="display:none">
+        <div class="famille-title">ðŸ‘¨â€ðŸ‘©â€ðŸ‘§ MÃªme famille â€” mÃªme numÃ©ro de tÃ©lÃ©phone</div>
+        <div class="famille-members" id="famille-members"></div>
+      </div>
+
       <!-- OBSERVATION -->
       <div class="section-card">
         <div class="section-title">ðŸ“ Observation</div>
@@ -320,6 +337,53 @@ function initials(nom,prenom){
 }
 function fv(v){return (v&&String(v).trim())||''}
 
+// ---- FAMILY GROUPING ----
+let familyGroups = []; // array of arrays of contact ids
+let contactToGroup = {}; // contact id -> group index
+let representativeIds = new Set(); // ids shown in list
+
+function buildFamilyGroups(contacts) {
+  const n = contacts.length;
+  const parent = Array.from({length: n}, (_, i) => i);
+  function find(x) { while(parent[x]!==x) x=parent[x]=parent[parent[x]]; return x; }
+  function union(a,b) { a=find(a); b=find(b); if(a!==b) parent[b]=a; }
+
+  // Build tel -> indices map
+  const telMap = {};
+  contacts.forEach((c, i) => {
+    const t1 = (c.tel1||'').replace(/\s/g,'');
+    const t2 = (c.tel2||'').replace(/\s/g,'');
+    if(t1) { if(!telMap[t1]) telMap[t1]=[]; telMap[t1].push(i); }
+    if(t2) { if(!telMap[t2]) telMap[t2]=[]; telMap[t2].push(i); }
+  });
+
+  // Union contacts sharing tel1 or tel2
+  Object.values(telMap).forEach(ids => {
+    for(let i=1; i<ids.length; i++) union(ids[0], ids[i]);
+  });
+
+  // Build groups
+  const groups = {};
+  contacts.forEach((_, i) => {
+    const r = find(i);
+    if(!groups[r]) groups[r] = [];
+    groups[r].push(i);
+  });
+
+  familyGroups = Object.values(groups);
+  contactToGroup = {};
+  representativeIds = new Set();
+
+  familyGroups.forEach(group => {
+    // Representative = first member with a phone
+    const rep = group[0];
+    representativeIds.add(contacts[rep].id);
+    group.forEach(idx => {
+      contactToGroup[contacts[idx].id] = group.map(i => contacts[i].id);
+    });
+  });
+}
+
 // ---- LOAD FROM FIREBASE ----
 function loadData(){
   if(!db) return loadFromEmbed();
@@ -328,6 +392,7 @@ function loadData(){
     const data = snap.val();
     if(!data){ loadFromEmbed(); return; }
     allContacts = Array.isArray(data) ? data : Object.values(data);
+    buildFamilyGroups(allContacts);
     render();
   }, ()=>loadFromEmbed());
 }
@@ -335,6 +400,7 @@ function loadData(){
 function loadFromEmbed(){
   const el = document.getElementById('CODATA');
   if(el){ try{ allContacts = JSON.parse(el.textContent); }catch(e){} }
+  buildFamilyGroups(allContacts);
   render();
 }
 
@@ -398,13 +464,21 @@ window.setFilter=(f,el)=>{
 window.filterContacts=()=>{
   const q=(document.getElementById('search').value||'').toLowerCase().trim();
   filtered = allContacts.filter(c=>{
+    // Only show representative of each family group
+    if(!representativeIds.has(c.id)) return false;
     const matchFilter = currentFilter==='tous' ||
       (currentFilter==='sansrdv' && !c.statut) ||
       c.statut===currentFilter;
     if(!matchFilter) return false;
     if(!q) return true;
-    const hay = [c.nom,c.prenom,c.tel1,c.tel2,c.telm,c.ville,c.cp,c.compagnie,c.adresse1].join(' ').toLowerCase();
-    return hay.includes(q);
+    // Search also in family members
+    const groupIds = contactToGroup[c.id] || [c.id];
+    return groupIds.some(gid => {
+      const gc = allContacts.find(x=>x.id===gid);
+      if(!gc) return false;
+      const hay = [gc.nom,gc.prenom,gc.tel1,gc.tel2,gc.ville,gc.cp,gc.compagnie,gc.adresse1].join(' ').toLowerCase();
+      return hay.includes(q);
+    });
   });
   document.getElementById('contact-count').textContent = filtered.length + ' contact' + (filtered.length>1?'s':'');
   renderList();
@@ -420,10 +494,12 @@ function renderList(){
     const col = colorFor(c.nom);
     const tel = fv(c.tel1)||fv(c.tel2)||fv(c.telm)||'Pas de tÃ©l';
     const badge = c.statut ? `<span class="badge badge-${c.statut==='signe'?'sign':c.statut==='ni'?'ni':c.statut}">${c.statut==='signe'?'SignÃ©':c.statut==='rappel'?'Rappel':c.statut==='nrp'?'NRP':c.statut==='ni'?'Pas int.':'RDV'}</span>` : '';
+    const groupIds = contactToGroup[c.id] || [c.id];
+    const hasFamille = groupIds.length > 1;
     div.innerHTML = `
       <div class="cavatar" style="background:${col}">${ini}</div>
       <div class="cinfo">
-        <div class="cname">${c.prenom||''} ${c.nom||''}</div>
+        <div class="cname">${c.prenom||''} ${c.nom||''}${hasFamille ? ' <span style="font-size:12px;color:#2563eb">ðŸ‘¨â€ðŸ‘©â€ðŸ‘§ '+groupIds.length+'</span>' : ''}</div>
         <div class="ctel">${tel}</div>
       </div>
       <div class="cstatus">${badge}</div>`;
@@ -491,6 +567,35 @@ function selectContact(c){
   document.querySelectorAll('.agent-btn').forEach(b=>b.classList.remove('selected'));
   if(selectedAgent==='Bresler') document.getElementById('agent-br').classList.add('selected');
   if(selectedAgent==='Lefebvre') document.getElementById('agent-le').classList.add('selected');
+
+  // FAMILLE
+  const groupIds = contactToGroup[c.id] || [c.id];
+  const autresMembres = groupIds.filter(gid => gid !== c.id).map(gid => allContacts.find(x=>x.id===gid)).filter(Boolean);
+  const familleCard = document.getElementById('famille-card');
+  const familleMembers = document.getElementById('famille-members');
+  if(autresMembres.length > 0) {
+    familleCard.style.display = 'block';
+    familleMembers.innerHTML = autresMembres.map(m => {
+      const tel = fv(m.tel1)||fv(m.tel2)||fv(m.telm)||'â€”';
+      const details = [
+        m.dateNaissance ? `ðŸ“… ${m.dateNaissance}` : '',
+        m.compagnie ? `ðŸ¢ ${m.compagnie}` : '',
+        m.adresse1 ? `ðŸ“ ${m.adresse1}` : '',
+        m.cp ? m.cp : '',
+        m.ville ? m.ville : '',
+        m.garantie ? `ðŸ›¡ï¸ ${m.garantie}` : '',
+        m.cotisation ? `ðŸ’° ${m.cotisation}` : '',
+        m.nContrat ? `ðŸ“„ NÂ° ${m.nContrat}` : '',
+        m.observation ? `ðŸ’¬ ${m.observation}` : '',
+      ].filter(Boolean);
+      return `<div class="fmember" onclick="selectContact(allContacts.find(x=>x.id===${m.id}))">
+        <div class="fmember-name">${m.prenom||''} ${m.nom||''} â€” <span style="color:var(--accent)">${tel}</span></div>
+        ${details.length ? `<div class="fmember-details">${details.map(d=>`<span class="fmember-detail">${d}</span>`).join('')}</div>` : ''}
+      </div>`;
+    }).join('');
+  } else {
+    familleCard.style.display = 'none';
+  }
 
   det.scrollIntoView({behavior:'smooth',block:'start'});
 }
