@@ -124,6 +124,32 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);font
 .save-rdv-btn:hover{background:var(--accent2)}
 .save-rdv-btn:active{transform:scale(0.98)}
 
+/* AGENDA */
+#agenda{display:none;padding:20px;flex:1;overflow-y:auto;background:var(--bg);width:100%}
+.agenda-header{display:flex;gap:12px;margin-bottom:20px;align-items:center;flex-wrap:wrap}
+.agenda-title{font-size:22px;font-weight:800;color:var(--text)}
+.agent-filter-btn{border:2px solid var(--border);border-radius:10px;padding:8px 20px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;background:var(--surface);color:var(--text);transition:all 0.15s}
+.agent-filter-btn:hover{border-color:var(--accent)}
+.agent-filter-btn.active-br{background:#2563eb;color:#fff;border-color:#2563eb}
+.agent-filter-btn.active-le{background:#7c3aed;color:#fff;border-color:#7c3aed}
+.agent-filter-btn.active-all{background:#16a34a;color:#fff;border-color:#16a34a}
+.rdv-day{margin-bottom:24px}
+.rdv-day-title{font-size:14px;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;padding:8px 0;border-bottom:2px solid var(--border);margin-bottom:12px}
+.rdv-day-title.today{color:var(--accent)}
+.rdv-item{background:var(--surface);border-radius:10px;padding:14px 18px;margin-bottom:10px;box-shadow:var(--shadow);display:flex;gap:16px;align-items:flex-start;cursor:pointer;transition:all 0.15s;border-left:4px solid transparent}
+.rdv-item:hover{box-shadow:var(--shadow-lg);transform:translateX(2px)}
+.rdv-item.agent-br{border-left-color:#2563eb}
+.rdv-item.agent-le{border-left-color:#7c3aed}
+.rdv-time{font-size:18px;font-weight:800;color:var(--accent);min-width:55px}
+.rdv-info{flex:1}
+.rdv-name{font-size:16px;font-weight:700}
+.rdv-tel{font-size:14px;color:var(--accent);font-weight:600}
+.rdv-notes-text{font-size:13px;color:var(--text2);margin-top:4px}
+.rdv-agent-badge{font-size:12px;font-weight:800;padding:4px 10px;border-radius:20px}
+.rdv-agent-badge.br{background:#dbeafe;color:#1d4ed8}
+.rdv-agent-badge.le{background:#ede9fe;color:#6d28d9}
+.no-rdv{text-align:center;padding:60px;color:var(--text2);font-size:16px;font-weight:600}
+
 /* FAMILLE */
 .famille-card{background:linear-gradient(135deg,#eff6ff,#f0fdf4);border:2px solid #bfdbfe;border-radius:var(--radius);padding:16px 20px;margin-bottom:16px;box-shadow:var(--shadow)}
 .famille-title{font-size:13px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
@@ -153,8 +179,10 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);font
     <div class="stat s-ni"><span class="snum" id="st-ni">0</span><span class="slabel">Pas int.</span></div>
   </div>
   <div id="topbtns">
+    <button class="tbtn tbtn-outline" id="btn-agenda-br" onclick="showAgenda('Bresler')">ðŸ“… RDV Bresler</button>
+    <button class="tbtn tbtn-outline" id="btn-agenda-le" onclick="showAgenda('Lefebvre')">ðŸ“… RDV Lefebvre</button>
+    <button class="tbtn tbtn-outline" id="btn-contacts" onclick="showContacts()" style="display:none">ðŸ‘¥ Contacts</button>
     <button class="tbtn tbtn-outline" onclick="exportData()">ðŸ“¤ Export</button>
-    <button class="tbtn tbtn-primary" onclick="logout()">DÃ©connexion</button>
   </div>
 </div>
 
@@ -174,6 +202,16 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);font
     </div>
     <div id="contact-count">Chargement...</div>
     <div id="contact-list"></div>
+  </div>
+
+  <div id="agenda">
+    <div class="agenda-header">
+      <div class="agenda-title" id="agenda-title">ðŸ“… Agenda</div>
+      <button class="agent-filter-btn active-all" id="af-all" onclick="agentFilter('tous',this)">Tous</button>
+      <button class="agent-filter-btn" id="af-br" onclick="agentFilter('Bresler',this)">BR Bresler</button>
+      <button class="agent-filter-btn" id="af-le" onclick="agentFilter('Lefebvre',this)">LE Lefebvre</button>
+    </div>
+    <div id="agenda-list"></div>
   </div>
 
   <div id="right">
@@ -404,12 +442,115 @@ function loadFromEmbed(){
   render();
 }
 
-// ---- AUTH ----
-if(auth){
-  onAuthStateChanged(auth, user=>{
-    if(!user) showLogin(); else loadData();
+// ---- AGENDA ----
+let currentAgentFilter = 'tous';
+
+window.showAgenda = function(agent) {
+  document.getElementById('left').style.display = 'none';
+  document.getElementById('right').style.display = 'none';
+  document.getElementById('agenda').style.display = 'block';
+  document.getElementById('btn-contacts').style.display = 'block';
+  document.getElementById('btn-agenda-br').style.display = 'none';
+  document.getElementById('btn-agenda-le').style.display = 'none';
+  currentAgentFilter = agent || 'tous';
+  // Set active filter button
+  document.querySelectorAll('.agent-filter-btn').forEach(b=>b.className='agent-filter-btn');
+  if(agent==='Bresler') { document.getElementById('af-br').className='agent-filter-btn active-br'; }
+  else if(agent==='Lefebvre') { document.getElementById('af-le').className='agent-filter-btn active-le'; }
+  else { document.getElementById('af-all').className='agent-filter-btn active-all'; }
+  renderAgenda();
+};
+
+window.showContacts = function() {
+  document.getElementById('left').style.display = 'flex';
+  document.getElementById('right').style.display = 'block';
+  document.getElementById('agenda').style.display = 'none';
+  document.getElementById('btn-contacts').style.display = 'none';
+  document.getElementById('btn-agenda-br').style.display = 'block';
+  document.getElementById('btn-agenda-le').style.display = 'block';
+};
+
+window.agentFilter = function(agent, el) {
+  currentAgentFilter = agent;
+  document.querySelectorAll('.agent-filter-btn').forEach(b=>b.className='agent-filter-btn');
+  if(agent==='Bresler') el.className='agent-filter-btn active-br';
+  else if(agent==='Lefebvre') el.className='agent-filter-btn active-le';
+  else el.className='agent-filter-btn active-all';
+  renderAgenda();
+};
+
+function renderAgenda() {
+  // Get all contacts with RDV
+  let rdvContacts = allContacts.filter(c => c.rdvDate && c.rdvDate.trim());
+  if(currentAgentFilter !== 'tous') {
+    rdvContacts = rdvContacts.filter(c => c.rdvAgent === currentAgentFilter);
+  }
+
+  // Sort by date then time
+  rdvContacts.sort((a,b) => {
+    const da = (a.rdvDate||'') + (a.rdvHeure||'');
+    const db = (b.rdvDate||'') + (b.rdvHeure||'');
+    return da.localeCompare(db);
   });
-} else { loadData(); }
+
+  const title = currentAgentFilter==='tous' ? 'ðŸ“… Tous les RDV' :
+    currentAgentFilter==='Bresler' ? 'ðŸ“… RDV de Bresler' : 'ðŸ“… RDV de Lefebvre';
+  document.getElementById('agenda-title').textContent = title + ' (' + rdvContacts.length + ')';
+
+  if(rdvContacts.length === 0) {
+    document.getElementById('agenda-list').innerHTML = '<div class="no-rdv">ðŸ“­ Aucun RDV trouvÃ©</div>';
+    return;
+  }
+
+  // Group by date
+  const today = new Date().toISOString().split('T')[0];
+  const groups = {};
+  rdvContacts.forEach(c => {
+    const d = c.rdvDate || 'Sans date';
+    if(!groups[d]) groups[d] = [];
+    groups[d].push(c);
+  });
+
+  let html = '';
+  Object.keys(groups).sort().forEach(date => {
+    const isToday = date === today;
+    const isPast = date < today;
+    let dateLabel = date;
+    if(isToday) dateLabel = 'ðŸŸ¢ AUJOURD\'HUI â€” ' + date;
+    else if(isPast) dateLabel = 'â° ' + date + ' (passÃ©)';
+    else dateLabel = 'ðŸ“† ' + date;
+
+    html += `<div class="rdv-day">
+      <div class="rdv-day-title${isToday?' today':''}">${dateLabel}</div>`;
+
+    groups[date].forEach(c => {
+      const agentClass = c.rdvAgent==='Bresler' ? 'br' : c.rdvAgent==='Lefebvre' ? 'le' : '';
+      const tel = fv(c.tel1)||fv(c.tel2)||fv(c.telm)||'â€”';
+      html += `<div class="rdv-item agent-${agentClass}" onclick="openContactFromAgenda(${c.id})">
+        <div class="rdv-time">${c.rdvHeure||'â€”'}</div>
+        <div class="rdv-info">
+          <div class="rdv-name">${c.prenom||''} ${c.nom||''}</div>
+          <div class="rdv-tel">ðŸ“ž ${tel}</div>
+          ${c.rdvNotes ? `<div class="rdv-notes-text">ðŸ’¬ ${c.rdvNotes}</div>` : ''}
+        </div>
+        ${c.rdvAgent ? `<span class="rdv-agent-badge ${agentClass}">${c.rdvAgent}</span>` : ''}
+      </div>`;
+    });
+    html += '</div>';
+  });
+
+  document.getElementById('agenda-list').innerHTML = html;
+}
+
+window.openContactFromAgenda = function(id) {
+  const c = allContacts.find(x=>x.id===id);
+  if(!c) return;
+  showContacts();
+  setTimeout(()=>selectContact(c), 100);
+};
+
+// ---- LOAD DIRECT (pas de connexion) ----
+loadData();
 
 function showLogin(){
   document.body.innerHTML = `
@@ -496,11 +637,17 @@ function renderList(){
     const badge = c.statut ? `<span class="badge badge-${c.statut==='signe'?'sign':c.statut==='ni'?'ni':c.statut}">${c.statut==='signe'?'SignÃ©':c.statut==='rappel'?'Rappel':c.statut==='nrp'?'NRP':c.statut==='ni'?'Pas int.':'RDV'}</span>` : '';
     const groupIds = contactToGroup[c.id] || [c.id];
     const hasFamille = groupIds.length > 1;
+    const familleNoms = hasFamille ? groupIds
+      .filter(gid => gid !== c.id)
+      .map(gid => { const m = allContacts.find(x=>x.id===gid); return m ? (m.prenom||'') + ' ' + (m.nom||'') : ''; })
+      .filter(Boolean)
+      .join(', ') : '';
     div.innerHTML = `
       <div class="cavatar" style="background:${col}">${ini}</div>
       <div class="cinfo">
-        <div class="cname">${c.prenom||''} ${c.nom||''}${hasFamille ? ' <span style="font-size:12px;color:#2563eb">ðŸ‘¨â€ðŸ‘©â€ðŸ‘§ '+groupIds.length+'</span>' : ''}</div>
+        <div class="cname">${c.prenom||''} ${c.nom||''}${hasFamille ? ' <span style="font-size:11px;color:#2563eb">ðŸ‘¨â€ðŸ‘©â€ðŸ‘§ '+groupIds.length+'</span>' : ''}</div>
         <div class="ctel">${tel}</div>
+        ${familleNoms ? `<div style="font-size:11px;color:#7c3aed;font-weight:600;margin-top:2px">ðŸ‘¥ ${familleNoms}</div>` : ''}
       </div>
       <div class="cstatus">${badge}</div>`;
     div.onclick = ()=>selectContact(c);
@@ -628,6 +775,7 @@ window.saveRDV=()=>{
   saveToFirebase(c);
   updateStats();
   renderList();
+  if(document.getElementById('agenda').style.display !== 'none') renderAgenda();
   toast('RDV enregistrÃ© ðŸ“…');
 };
 
