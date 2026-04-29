@@ -664,26 +664,7 @@ function updateStats(){
     return list.slice(0,12).map(c=>`<div class="stt-item"><span class="stt-name">${c.prenom||''} ${c.nom||''}</span><span class="stt-date">${c.rdvDate||''} ${c.rdvHeure||''}</span></div>`).join('')+(list.length>12?`<div style="color:#64748b;font-size:11px;margin-top:6px">+${list.length-12} autres</div>`:'');
   }
   document.getElementById('tooltip-all').innerHTML=tip(all);
-  document.getElementById('tooltip-br').innerHTML=tip(br);
-  document.getElementById('tooltip-le').innerHTML=tip(le);
-}
-
-// ZONES
-currentZone = 'all';
-
-// getZoneTime defined in module below
-
-function isHoraireOk(zone) {
-  if(zone === 'all') return true;
-  const t = getZoneTime(zone);
-  if(!t) return true;
-  const h = t.getHours();
-  return h >= 9 && h < 19;
-}
-
-function formatZoneTime(zone) {
-  const t = getZoneTime(zone);
-  if(!t) return '';
+  document.getElementById('tooltip-br')';
   return t.getHours().toString().padStart(2,'0') + 'h' + t.getMinutes().toString().padStart(2,'0');
 }
 
