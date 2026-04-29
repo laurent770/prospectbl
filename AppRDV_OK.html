@@ -7,198 +7,233 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#f0f4f8;
-  --surface:#ffffff;
-  --surface2:#f7f9fc;
-  --border:#dde3ec;
-  --text:#1a2233;
-  --text2:#5a6a80;
-  --accent:#2563eb;
-  --accent2:#1d4ed8;
-  --green:#16a34a;
-  --orange:#ea580c;
-  --red:#dc2626;
-  --purple:#7c3aed;
-  --teal:#0891b2;
-  --radius:12px;
-  --shadow:0 2px 8px rgba(0,0,0,0.08);
-  --shadow-lg:0 4px 24px rgba(0,0,0,0.12);
-}
+:root{--bg:#f0f4f8;--surface:#fff;--surface2:#f7f9fc;--border:#dde3ec;--text:#1a2233;--text2:#5a6a80;--accent:#2563eb;--accent2:#1d4ed8;--green:#16a34a;--orange:#ea580c;--red:#dc2626;--purple:#7c3aed;--radius:12px;--shadow:0 2px 8px rgba(0,0,0,0.08);--shadow-lg:0 4px 24px rgba(0,0,0,0.12)}
 body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);font-size:15px;min-height:100vh}
-
-/* TOPBAR */
-#topbar{background:var(--surface);border-bottom:2px solid var(--border);padding:12px 20px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
-#logo{font-size:22px;font-weight:800;color:var(--accent);letter-spacing:-0.5px;flex-shrink:0}
+#login-screen{position:fixed;inset:0;background:linear-gradient(135deg,#1e3a8a,#7c3aed);display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:16px}
+.login-box{background:#fff;border-radius:20px;padding:36px;width:320px;box-shadow:0 20px 60px rgba(0,0,0,0.3);text-align:center}
+.login-logo{font-size:26px;font-weight:800;color:#2563eb;margin-bottom:4px}
+.login-sub{color:#5a6a80;font-size:13px;margin-bottom:24px}
+.pin-display{display:flex;gap:8px;justify-content:center;margin-bottom:18px}
+.pin-dot{width:14px;height:14px;border-radius:50%;background:#dde3ec;transition:all 0.2s}
+.pin-dot.filled{background:#2563eb}
+.pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.pin-btn{border:2px solid #dde3ec;border-radius:10px;padding:14px;font-size:18px;font-weight:800;cursor:pointer;background:#f7f9fc;color:#1a2233;transition:all 0.15s;font-family:inherit}
+.pin-btn:hover{background:#2563eb;color:#fff;border-color:#2563eb}
+.pin-btn:active{transform:scale(0.95)}
+.pin-clear{background:#fee2e2;border-color:#fca5a5;color:#dc2626}
+.pin-clear:hover{background:#dc2626;color:#fff}
+#pin-error{color:#dc2626;font-size:12px;font-weight:700;min-height:18px;margin-top:4px}
+.user-btns{display:flex;flex-direction:column;gap:10px;width:320px}
+.user-btn{border:none;border-radius:12px;padding:16px 20px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.15s;text-align:left;letter-spacing:0.3px}
+.user-btn:hover{opacity:0.9;transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,0.2)}
+.user-btn-rdv{background:#2563eb;color:#fff}
+.user-btn-br{background:#16a34a;color:#fff}
+.user-btn-le{background:#7c3aed;color:#fff}
+#topbar{background:var(--surface);border-bottom:2px solid var(--border);padding:10px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow);display:none}
+#logo{font-size:19px;font-weight:800;color:var(--accent);flex-shrink:0}
 #logo span{color:var(--text)}
-#statbar{display:flex;gap:8px;flex-wrap:wrap;flex:1}
-.stat{background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;padding:6px 14px;font-size:13px;font-weight:700;display:flex;flex-direction:column;align-items:center;min-width:70px}
-.stat .snum{font-size:20px;font-weight:800;line-height:1.1}
-.stat .slabel{font-size:10px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px}
+#user-badge{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:800;flex-shrink:0}
+#statbar{display:flex;gap:5px;flex-wrap:wrap;flex:1}
+.stat{background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;padding:4px 8px;font-size:11px;font-weight:700;display:flex;flex-direction:column;align-items:center;min-width:55px;position:relative;cursor:default}
+.stat .snum{font-size:16px;font-weight:800;line-height:1.1}
+.stat .slabel{font-size:8px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px;text-align:center}
 .stat.s-total .snum{color:var(--accent)}
 .stat.s-rdv .snum{color:var(--green)}
+.stat.s-rdv-br .snum{color:#2563eb}
+.stat.s-rdv-le .snum{color:#7c3aed}
 .stat.s-sign .snum{color:var(--purple)}
 .stat.s-rappel .snum{color:var(--orange)}
 .stat.s-nrp .snum{color:var(--red)}
 .stat.s-ni .snum{color:var(--text2)}
-#topbtns{display:flex;gap:8px;flex-shrink:0}
-.tbtn{border:none;border-radius:8px;padding:8px 16px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.15s}
-.tbtn-primary{background:var(--accent);color:#fff}
-.tbtn-primary:hover{background:var(--accent2)}
-.tbtn-outline{background:var(--surface2);color:var(--text);border:1.5px solid var(--border)}
-.tbtn-outline:hover{background:var(--border)}
-
-/* LAYOUT */
-#app{display:flex;height:calc(100vh - 65px)}
-
-/* LEFT PANEL */
-#left{width:360px;flex-shrink:0;background:var(--surface);border-right:2px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
-#search-wrap{padding:12px;border-bottom:1.5px solid var(--border)}
-#search{width:100%;border:2px solid var(--border);border-radius:10px;padding:10px 14px;font-size:15px;font-family:inherit;background:var(--surface2);color:var(--text);outline:none;transition:border-color 0.15s}
+.stat-tooltip{display:none;position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#1a2233;color:#fff;border-radius:10px;padding:10px 14px;min-width:220px;max-width:300px;z-index:200;font-size:12px;text-align:left;box-shadow:var(--shadow-lg)}
+.stat:hover .stat-tooltip{display:block}
+.stat-tooltip-item{padding:3px 0;border-bottom:1px solid rgba(255,255,255,0.1);font-size:11px}
+.stat-tooltip-item:last-child{border-bottom:none}
+#topbtns{display:flex;gap:5px;flex-shrink:0}
+.tbtn{border:none;border-radius:8px;padding:6px 11px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.15s}
+.tbtn-outline{background:var(--surface2);color:var(--text);border:1.5px solid var(--border)}.tbtn-outline:hover{background:var(--border)}
+.tbtn-danger{background:#fee2e2;color:#dc2626;border:1.5px solid #fca5a5}.tbtn-danger:hover{background:#dc2626;color:#fff}
+#app{display:flex;height:calc(100vh - 58px);display:none}
+#left{width:330px;flex-shrink:0;background:var(--surface);border-right:2px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+#search-wrap{padding:9px;border-bottom:1.5px solid var(--border)}
+#search{width:100%;border:2px solid var(--border);border-radius:10px;padding:8px 11px;font-size:13px;font-family:inherit;background:var(--surface2);color:var(--text);outline:none;transition:border-color 0.15s}
 #search:focus{border-color:var(--accent)}
-#filter-tabs{display:flex;gap:4px;padding:8px 12px;border-bottom:1.5px solid var(--border);flex-wrap:wrap}
-.ftab{border:none;border-radius:8px;padding:5px 11px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;background:var(--surface2);color:var(--text2);border:1.5px solid transparent;transition:all 0.15s}
-.ftab:hover{background:var(--border)}
+#filter-tabs{display:flex;gap:3px;padding:6px 9px;border-bottom:1.5px solid var(--border);flex-wrap:wrap}
+.ftab{border:1.5px solid transparent;border-radius:7px;padding:3px 8px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;background:var(--surface2);color:var(--text2);transition:all 0.15s}
 .ftab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-#contact-count{padding:8px 14px;font-size:12px;color:var(--text2);font-weight:600;background:var(--surface2);border-bottom:1px solid var(--border)}
+#contact-count{padding:5px 11px;font-size:10px;color:var(--text2);font-weight:600;background:var(--surface2);border-bottom:1px solid var(--border)}
 #contact-list{overflow-y:auto;flex:1}
-.citem{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.12s}
+.citem{display:flex;align-items:flex-start;gap:9px;padding:9px 11px;border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.12s}
 .citem:hover{background:var(--surface2)}
 .citem.selected{background:#eff6ff;border-left:3px solid var(--accent)}
-.cavatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;flex-shrink:0;color:#fff}
+.cavatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;color:#fff;margin-top:2px}
 .cinfo{flex:1;min-width:0}
-.cname{font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ctel{font-size:13px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cstatus{flex-shrink:0}
-.badge{font-size:10px;font-weight:800;padding:3px 7px;border-radius:20px;text-transform:uppercase;letter-spacing:0.3px}
+.cname{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ctel{font-size:11px;color:var(--text2)}
+.cfamille{font-size:10px;color:#7c3aed;font-weight:600;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cstatus{flex-shrink:0;margin-top:2px}
+.badge{font-size:9px;font-weight:800;padding:2px 5px;border-radius:20px;text-transform:uppercase;white-space:nowrap}
 .badge-rdv{background:#dcfce7;color:#15803d}
-.badge-sign{background:#ede9fe;color:#6d28d9}
+.badge-signe{background:#ede9fe;color:#6d28d9}
 .badge-rappel{background:#ffedd5;color:#c2410c}
-.badge-nrp{background:#fee2e2;color:#b91c1c}
+.badge-nrp1{background:#fee2e2;color:#b91c1c}
+.badge-nrp2{background:#fecaca;color:#991b1b}
+.badge-nrp3{background:#dc2626;color:#fff}
 .badge-ni{background:#f1f5f9;color:#64748b}
-
-/* RIGHT PANEL */
-#right{flex:1;overflow-y:auto;background:var(--bg);padding:20px}
-#placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--text2);gap:12px}
-#placeholder svg{opacity:0.3}
-#placeholder p{font-size:18px;font-weight:600}
-
-/* CONTACT DETAIL */
+#right{flex:1;overflow-y:auto;background:var(--bg);padding:14px}
+#placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--text2);gap:10px}
+#placeholder p{font-size:15px;font-weight:600}
 #detail{display:none}
-.detail-header{background:var(--surface);border-radius:var(--radius);padding:20px 24px;margin-bottom:16px;box-shadow:var(--shadow);display:flex;align-items:center;gap:20px}
-.detail-avatar{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:#fff;flex-shrink:0}
-.detail-name{font-size:26px;font-weight:800;line-height:1.1}
-.detail-source{font-size:13px;color:var(--text2);font-weight:600;margin-top:4px}
-.detail-actions{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap}
-.abtn{border:none;border-radius:10px;padding:10px 18px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.15s}
-.abtn-sign{background:#16a34a;color:#fff}.abtn-sign:hover{background:#15803d}
-.abtn-rappel{background:#ea580c;color:#fff}.abtn-rappel:hover{background:#c2410c}
-.abtn-nrp{background:#dc2626;color:#fff}.abtn-nrp:hover{background:#b91c1c}
-.abtn-ni{background:#64748b;color:#fff}.abtn-ni:hover{background:#475569}
-.abtn-active{box-shadow:0 0 0 3px rgba(0,0,0,0.2);transform:scale(0.97)}
-
-.section-card{background:var(--surface);border-radius:var(--radius);padding:20px 24px;margin-bottom:16px;box-shadow:var(--shadow)}
-.section-title{font-size:13px;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.detail-header{background:var(--surface);border-radius:var(--radius);padding:14px 18px;margin-bottom:10px;box-shadow:var(--shadow);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.detail-avatar{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:800;color:#fff;flex-shrink:0}
+.detail-name{font-size:20px;font-weight:800}
+.detail-source{font-size:11px;color:var(--text2);font-weight:600;margin-top:2px}
+.detail-actions{display:flex;gap:5px;margin-left:auto;flex-wrap:wrap}
+.abtn{border:none;border-radius:8px;padding:7px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.15s}
+.abtn-sign{background:#16a34a;color:#fff}.abtn-rappel{background:#ea580c;color:#fff}
+.abtn-nrp1{background:#ef4444;color:#fff}.abtn-nrp2{background:#dc2626;color:#fff}.abtn-nrp3{background:#991b1b;color:#fff}
+.abtn-ni{background:#64748b;color:#fff}
+.abtn-active{box-shadow:0 0 0 3px rgba(0,0,0,0.25);transform:scale(0.96)}
+.section-card{background:var(--surface);border-radius:var(--radius);padding:14px 18px;margin-bottom:10px;box-shadow:var(--shadow)}
+.section-title{font-size:10px;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
 .section-title::after{content:'';flex:1;height:1.5px;background:var(--border)}
-.fields-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
-.field{display:flex;flex-direction:column;gap:3px}
-.field-label{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px}
-.field-value{font-size:16px;font-weight:600;color:var(--text);word-break:break-word}
-.field-value.empty{color:#c0cad8;font-style:italic;font-weight:400;font-size:14px}
-.field-value.phone{color:var(--accent);font-size:18px;font-weight:800}
+.fields-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px}
+.field{display:flex;flex-direction:column;gap:2px}
+.field-label{font-size:9px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px}
+.field-value{font-size:14px;font-weight:600;color:var(--text);word-break:break-word}
+.field-value.empty{color:#c0cad8;font-style:italic;font-weight:400;font-size:12px}
+.field-value.phone{color:var(--accent);font-size:16px;font-weight:800}
 .field-value.highlight{color:var(--green);font-weight:700}
-
-/* RDV SECTION */
-.rdv-card{background:var(--surface);border-radius:var(--radius);padding:20px 24px;margin-bottom:16px;box-shadow:var(--shadow)}
-.rdv-row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
-.rdv-field{display:flex;flex-direction:column;gap:4px;flex:1;min-width:140px}
-.rdv-field label{font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px}
-.rdv-field input, .rdv-field textarea, .rdv-field select{border:2px solid var(--border);border-radius:8px;padding:10px 12px;font-size:15px;font-family:inherit;background:var(--surface2);color:var(--text);outline:none;transition:border-color 0.15s;width:100%}
-.rdv-field input:focus, .rdv-field textarea:focus, .rdv-field select:focus{border-color:var(--accent)}
-.rdv-field textarea{resize:vertical;min-height:80px}
-.agent-btns{display:flex;gap:8px}
-.agent-btn{border:2px solid var(--border);border-radius:8px;padding:9px 16px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;background:var(--surface2);color:var(--text);transition:all 0.15s;flex:1}
-.agent-btn:hover{border-color:var(--accent);color:var(--accent)}
+.rdv-card{background:var(--surface);border-radius:var(--radius);padding:14px 18px;margin-bottom:10px;box-shadow:var(--shadow)}
+.rdv-row{display:flex;gap:9px;flex-wrap:wrap;align-items:flex-end;margin-bottom:9px}
+.rdv-field{display:flex;flex-direction:column;gap:3px;flex:1;min-width:120px}
+.rdv-field label{font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.5px}
+.rdv-field input,.rdv-field textarea{border:2px solid var(--border);border-radius:8px;padding:8px 10px;font-size:14px;font-family:inherit;background:var(--surface2);color:var(--text);outline:none;transition:border-color 0.15s;width:100%}
+.rdv-field input:focus,.rdv-field textarea:focus{border-color:var(--accent)}
+.rdv-field textarea{resize:vertical;min-height:60px}
+.agent-btns{display:flex;gap:6px}
+.agent-btn{border:2px solid var(--border);border-radius:8px;padding:7px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;background:var(--surface2);color:var(--text);transition:all 0.15s;flex:1}
 .agent-btn.selected{background:var(--accent);color:#fff;border-color:var(--accent)}
-.save-rdv-btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:12px 28px;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;transition:all 0.15s;width:100%;margin-top:8px}
+.save-rdv-btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:10px 20px;font-size:14px;font-weight:800;cursor:pointer;font-family:inherit;width:100%;margin-top:5px;transition:all 0.15s}
 .save-rdv-btn:hover{background:var(--accent2)}
-.save-rdv-btn:active{transform:scale(0.98)}
-
-/* AGENDA */
-#agenda{display:none;padding:20px;flex:1;overflow-y:auto;background:var(--bg);width:100%}
-.agenda-header{display:flex;gap:12px;margin-bottom:20px;align-items:center;flex-wrap:wrap}
-.agenda-title{font-size:22px;font-weight:800;color:var(--text)}
-.agent-filter-btn{border:2px solid var(--border);border-radius:10px;padding:8px 20px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;background:var(--surface);color:var(--text);transition:all 0.15s}
-.agent-filter-btn:hover{border-color:var(--accent)}
+.famille-card{background:linear-gradient(135deg,#eff6ff,#f0fdf4);border:2px solid #bfdbfe;border-radius:var(--radius);padding:12px 16px;margin-bottom:10px;box-shadow:var(--shadow)}
+.famille-title{font-size:11px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:9px}
+.fmember{background:#fff;border:1.5px solid #bfdbfe;border-radius:8px;padding:9px 12px;cursor:pointer;transition:all 0.15s;margin-bottom:6px}
+.fmember:hover{border-color:var(--accent);background:#eff6ff}
+.fmember-name{font-size:13px;font-weight:700}
+.fmember-details{font-size:11px;color:var(--text2);margin-top:2px}
+#agenda{display:none;padding:14px;flex:1;overflow-y:auto;background:var(--bg);width:100%}
+.agenda-header{display:flex;gap:8px;margin-bottom:14px;align-items:center;flex-wrap:wrap}
+.agenda-title{font-size:18px;font-weight:800;color:var(--text)}
+.agent-filter-btn{border:2px solid var(--border);border-radius:8px;padding:5px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;background:var(--surface);color:var(--text);transition:all 0.15s}
 .agent-filter-btn.active-br{background:#2563eb;color:#fff;border-color:#2563eb}
 .agent-filter-btn.active-le{background:#7c3aed;color:#fff;border-color:#7c3aed}
 .agent-filter-btn.active-all{background:#16a34a;color:#fff;border-color:#16a34a}
-.rdv-day{margin-bottom:24px}
-.rdv-day-title{font-size:14px;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;padding:8px 0;border-bottom:2px solid var(--border);margin-bottom:12px}
+.rdv-day{margin-bottom:18px}
+.rdv-day-title{font-size:12px;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:0.8px;padding:5px 0;border-bottom:2px solid var(--border);margin-bottom:9px}
 .rdv-day-title.today{color:var(--accent)}
-.rdv-item{background:var(--surface);border-radius:10px;padding:14px 18px;margin-bottom:10px;box-shadow:var(--shadow);display:flex;gap:16px;align-items:flex-start;cursor:pointer;transition:all 0.15s;border-left:4px solid transparent}
+.rdv-item{background:var(--surface);border-radius:10px;padding:11px 14px;margin-bottom:7px;box-shadow:var(--shadow);display:flex;gap:12px;align-items:flex-start;cursor:pointer;transition:all 0.15s;border-left:4px solid transparent}
 .rdv-item:hover{box-shadow:var(--shadow-lg);transform:translateX(2px)}
 .rdv-item.agent-br{border-left-color:#2563eb}
 .rdv-item.agent-le{border-left-color:#7c3aed}
-.rdv-time{font-size:18px;font-weight:800;color:var(--accent);min-width:55px}
+.rdv-time{font-size:15px;font-weight:800;color:var(--accent);min-width:48px}
 .rdv-info{flex:1}
-.rdv-name{font-size:16px;font-weight:700}
-.rdv-tel{font-size:14px;color:var(--accent);font-weight:600}
-.rdv-notes-text{font-size:13px;color:var(--text2);margin-top:4px}
-.rdv-agent-badge{font-size:12px;font-weight:800;padding:4px 10px;border-radius:20px}
+.rdv-name{font-size:14px;font-weight:700}
+.rdv-tel{font-size:12px;color:var(--accent);font-weight:600}
+.rdv-notes-text{font-size:11px;color:var(--text2);margin-top:2px}
+.rdv-agent-badge{font-size:10px;font-weight:800;padding:3px 7px;border-radius:20px}
 .rdv-agent-badge.br{background:#dbeafe;color:#1d4ed8}
 .rdv-agent-badge.le{background:#ede9fe;color:#6d28d9}
-.no-rdv{text-align:center;padding:60px;color:var(--text2);font-size:16px;font-weight:600}
-
-/* FAMILLE */
-.famille-card{background:linear-gradient(135deg,#eff6ff,#f0fdf4);border:2px solid #bfdbfe;border-radius:var(--radius);padding:16px 20px;margin-bottom:16px;box-shadow:var(--shadow)}
-.famille-title{font-size:13px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.famille-members{display:flex;flex-direction:column;gap:8px}
-.fmember{background:#fff;border:1.5px solid #bfdbfe;border-radius:10px;padding:12px 16px;cursor:pointer;transition:all 0.15s}
-.fmember:hover{border-color:var(--accent);background:#eff6ff}
-.fmember-name{font-size:15px;font-weight:700;color:var(--text)}
-.fmember-details{font-size:13px;color:var(--text2);margin-top:4px;display:flex;gap:12px;flex-wrap:wrap}
-.fmember-detail{display:flex;gap:4px;align-items:center}
-.citem.is-famille::after{content:'Famille';font-size:11px;margin-left:4px}
-
-/* TOAST */
-#toast{position:fixed;bottom:24px;right:24px;background:#1a2233;color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:700;z-index:9999;opacity:0;transform:translateY(10px);transition:all 0.3s;pointer-events:none}
-#toast.show{opacity:1;transform:translateY(0)}
+.no-rdv{text-align:center;padding:50px;color:var(--text2);font-size:14px;font-weight:600}
+#rdv-popup{position:fixed;bottom:20px;right:20px;background:#1a2233;color:#fff;border-radius:14px;padding:16px 20px;max-width:300px;z-index:9998;box-shadow:0 8px 32px rgba(0,0,0,0.3);display:none}
+#rdv-popup-title{font-size:13px;font-weight:800;color:#60a5fa;margin-bottom:4px}
+#rdv-popup-content{font-size:15px;font-weight:700;margin-bottom:4px}
+#rdv-popup-sub{font-size:12px;color:#94a3b8}
+#rdv-popup-close{background:#3b82f6;border:none;border-radius:8px;color:#fff;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:10px;width:100%}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(10px);background:#1a2233;color:#fff;padding:9px 18px;border-radius:10px;font-size:13px;font-weight:700;z-index:9997;opacity:0;transition:all 0.3s;pointer-events:none}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
 
+<div id="login-screen">
+  <div id="login-step1">
+    <div class="user-btns">
+      <button class="user-btn user-btn-rdv" onclick="selectUser('rdv')">ðŸ‘© Responsable RDV</button>
+      <button class="user-btn user-btn-br" onclick="selectUser('bresler')">BR Bresler</button>
+      <button class="user-btn user-btn-le" onclick="selectUser('lefebvre')">LE Lefebvre</button>
+    </div>
+  </div>
+  <div id="login-step2" style="display:none">
+    <div class="login-box">
+      <div class="login-logo">ProspectBL</div>
+      <div class="login-sub" id="login-user-label">Code PIN</div>
+      <div class="pin-display">
+        <div class="pin-dot" id="pd0"></div><div class="pin-dot" id="pd1"></div>
+        <div class="pin-dot" id="pd2"></div><div class="pin-dot" id="pd3"></div>
+        <div class="pin-dot" id="pd4"></div><div class="pin-dot" id="pd5"></div>
+      </div>
+      <div class="pin-pad">
+        <button class="pin-btn" onclick="pinPress('1')">1</button>
+        <button class="pin-btn" onclick="pinPress('2')">2</button>
+        <button class="pin-btn" onclick="pinPress('3')">3</button>
+        <button class="pin-btn" onclick="pinPress('4')">4</button>
+        <button class="pin-btn" onclick="pinPress('5')">5</button>
+        <button class="pin-btn" onclick="pinPress('6')">6</button>
+        <button class="pin-btn" onclick="pinPress('7')">7</button>
+        <button class="pin-btn" onclick="pinPress('8')">8</button>
+        <button class="pin-btn" onclick="pinPress('9')">9</button>
+        <button class="pin-btn pin-clear" onclick="pinClear()">Ret.</button>
+        <button class="pin-btn" onclick="pinPress('0')">0</button>
+        <button class="pin-btn" style="background:#dcfce7;border-color:#86efac;color:#16a34a" onclick="pinValidate()">OK</button>
+      </div>
+      <div id="pin-error"></div>
+      <button onclick="backToUsers()" style="border:none;background:none;color:#5a6a80;cursor:pointer;font-size:12px;margin-top:8px;font-family:inherit">Retour</button>
+    </div>
+  </div>
+</div>
+
 <div id="topbar">
   <div id="logo">Prospect<span>BL</span></div>
+  <div id="user-badge"></div>
   <div id="statbar">
     <div class="stat s-total"><span class="snum" id="st-total">0</span><span class="slabel">Contacts</span></div>
-    <div class="stat s-rdv"><span class="snum" id="st-rdv">0</span><span class="slabel">RDV</span></div>
-    <div class="stat s-sign"><span class="snum" id="st-sign">0</span><span class="slabel">SignÃ©s</span></div>
+    <div class="stat s-rdv">
+      <span class="snum" id="st-rdv">0</span><span class="slabel">RDV Total</span>
+      <div class="stat-tooltip" id="tooltip-rdv-all"></div>
+    </div>
+    <div class="stat s-rdv-br">
+      <span class="snum" id="st-rdv-br">0</span><span class="slabel">RDV Bresler</span>
+      <div class="stat-tooltip" id="tooltip-rdv-br"></div>
+    </div>
+    <div class="stat s-rdv-le">
+      <span class="snum" id="st-rdv-le">0</span><span class="slabel">RDV Lefebvre</span>
+      <div class="stat-tooltip" id="tooltip-rdv-le"></div>
+    </div>
+    <div class="stat s-sign"><span class="snum" id="st-sign">0</span><span class="slabel">Signes</span></div>
     <div class="stat s-rappel"><span class="snum" id="st-rappel">0</span><span class="slabel">Rappels</span></div>
-    <div class="stat s-nrp"><span class="snum" id="st-nrp">0</span><span class="slabel">âœ• NRP</span></div>
-    <div class="stat s-ni"><span class="snum" id="st-ni">0</span><span class="slabel">â€” Pas int.</span></div>
+    <div class="stat s-nrp"><span class="snum" id="st-nrp">0</span><span class="slabel">NRP</span></div>
+    <div class="stat s-ni"><span class="snum" id="st-ni">0</span><span class="slabel">Pas int.</span></div>
   </div>
   <div id="topbtns">
-    <button class="tbtn tbtn-outline" id="btn-agenda-br" onclick="showAgenda('Bresler')">RDV RDV Bresler</button>
-    <button class="tbtn tbtn-outline" id="btn-agenda-le" onclick="showAgenda('Lefebvre')">RDV RDV Lefebvre</button>
-    <button class="tbtn tbtn-outline" id="btn-contacts" onclick="showContacts()" style="display:none"> Contacts</button>
-    <button class="tbtn tbtn-outline" onclick="exportData()"> Export</button>
+    <button class="tbtn tbtn-outline" id="btn-agenda" onclick="showAgenda()">Agenda RDV</button>
+    <button class="tbtn tbtn-outline" id="btn-contacts" onclick="showContacts()" style="display:none">Contacts</button>
+    <button class="tbtn tbtn-outline" onclick="exportData()">Export</button>
+    <button class="tbtn tbtn-danger" onclick="doLogout()">Quitter</button>
   </div>
 </div>
 
 <div id="app">
   <div id="left">
-    <div id="search-wrap">
-      <input type="text" id="search" placeholder="ðŸ” Rechercher un contact..." oninput="filterContacts()">
-    </div>
+    <div id="search-wrap"><input type="text" id="search" placeholder="Rechercher..." oninput="filterContacts()"></div>
     <div id="filter-tabs">
       <button class="ftab active" onclick="setFilter('tous',this)">Tous</button>
       <button class="ftab" onclick="setFilter('sansrdv',this)">Sans RDV</button>
       <button class="ftab" onclick="setFilter('rdv',this)">RDV</button>
-      <button class="ftab" onclick="setFilter('signe',this)">SignÃ©</button>
-      <button class="ftab" onclick="setFilter('rappel',this)">â†º Rappel</button>
-      <button class="ftab" onclick="setFilter('nrp',this)">âœ• NRP</button>
-      <button class="ftab" onclick="setFilter('ni',this)">â€” Pas int.</button>
+      <button class="ftab" onclick="setFilter('signe',this)">Signe</button>
+      <button class="ftab" onclick="setFilter('rappel',this)">Rappel</button>
+      <button class="ftab" onclick="setFilter('nrp',this)">NRP</button>
+      <button class="ftab" onclick="setFilter('ni',this)">Pas int.</button>
     </div>
     <div id="contact-count">Chargement...</div>
     <div id="contact-list"></div>
@@ -206,113 +241,81 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);font
 
   <div id="agenda">
     <div class="agenda-header">
-      <div class="agenda-title" id="agenda-title">RDV Agenda</div>
+      <div class="agenda-title" id="agenda-title">Agenda RDV</div>
       <button class="agent-filter-btn active-all" id="af-all" onclick="agentFilter('tous',this)">Tous</button>
-      <button class="agent-filter-btn" id="af-br" onclick="agentFilter('Bresler',this)">BR Bresler</button>
-      <button class="agent-filter-btn" id="af-le" onclick="agentFilter('Lefebvre',this)">LE Lefebvre</button>
+      <button class="agent-filter-btn" id="af-br" onclick="agentFilter('Bresler',this)">Bresler</button>
+      <button class="agent-filter-btn" id="af-le" onclick="agentFilter('Lefebvre',this)">Lefebvre</button>
     </div>
     <div id="agenda-list"></div>
   </div>
 
   <div id="right">
     <div id="placeholder">
-      <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      <p>SÃ©lectionnez un contact</p>
+      <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <p>Selectionnez un contact</p>
     </div>
-
     <div id="detail">
       <div class="detail-header">
         <div class="detail-avatar" id="d-avatar"></div>
-        <div>
-          <div class="detail-name" id="d-name"></div>
-          <div class="detail-source" id="d-source"></div>
-        </div>
+        <div><div class="detail-name" id="d-name"></div><div class="detail-source" id="d-src"></div></div>
         <div class="detail-actions">
-          <button class="abtn abtn-sign" id="btn-sign" onclick="setStatus('signe')">âœ“ SignÃ©</button>
-          <button class="abtn abtn-rappel" id="btn-rappel" onclick="setStatus('rappel')"> Rappel</button>
-          <button class="abtn abtn-nrp" id="btn-nrp" onclick="setStatus('nrp')"> NRP</button>
-          <button class="abtn abtn-ni" id="btn-ni" onclick="setStatus('ni')"> Pas int.</button>
+          <button class="abtn abtn-sign" id="btn-sign" onclick="setStatus('signe')">Signe</button>
+          <button class="abtn abtn-rappel" id="btn-rappel" onclick="setStatus('rappel')">Rappel</button>
+          <button class="abtn abtn-nrp1" id="btn-nrp1" onclick="setStatus('nrp1')">NRP 1</button>
+          <button class="abtn abtn-nrp2" id="btn-nrp2" onclick="setStatus('nrp2')">NRP 2</button>
+          <button class="abtn abtn-nrp3" id="btn-nrp3" onclick="setStatus('nrp3')">NRP 3+</button>
+          <button class="abtn abtn-ni" id="btn-ni" onclick="setStatus('ni')">Pas int.</button>
         </div>
       </div>
-
-      <!-- COORDONNÃ‰ES -->
-      <div class="section-card">
-        <div class="section-title"> COORDONNÃ‰ES</div>
-        <div class="fields-grid">
-          <div class="field"><div class="field-label">TÃ©lÃ©phone 1</div><div class="field-value phone" id="d-tel1"></div></div>
-          <div class="field"><div class="field-label">TÃ©lÃ©phone 2</div><div class="field-value phone" id="d-tel2"></div></div>
-          <div class="field"><div class="field-label">TÃ©lÃ©phone Maella</div><div class="field-value phone" id="d-telm"></div></div>
-          <div class="field"><div class="field-label">Adresse 1</div><div class="field-value" id="d-adr1"></div></div>
-          <div class="field"><div class="field-label">Adresse 2</div><div class="field-value" id="d-adr2"></div></div>
-          <div class="field"><div class="field-label">Code Postal</div><div class="field-value" id="d-cp"></div></div>
-          <div class="field"><div class="field-label">Ville</div><div class="field-value" id="d-ville"></div></div>
-          <div class="field"><div class="field-label">CP / Ville</div><div class="field-value" id="d-cpville"></div></div>
-          <div class="field"><div class="field-label">Date de naissance</div><div class="field-value" id="d-ddn"></div></div>
-        </div>
-      </div>
-
-      <!-- CONTRAT -->
-      <div class="section-card">
-        <div class="section-title"> Contrat & Assurance</div>
-        <div class="fields-grid">
-          <div class="field"><div class="field-label">Compagnie</div><div class="field-value highlight" id="d-compagnie"></div></div>
-          <div class="field"><div class="field-label">Garantie</div><div class="field-value" id="d-garantie"></div></div>
-          <div class="field"><div class="field-label">Cotisation</div><div class="field-value" id="d-cotisation"></div></div>
-          <div class="field"><div class="field-label">NÂ° Contrat</div><div class="field-value" id="d-ncontrat"></div></div>
-          <div class="field"><div class="field-label">Produit</div><div class="field-value" id="d-produit"></div></div>
-          <div class="field"><div class="field-label">Tarif</div><div class="field-value" id="d-tarif"></div></div>
-          <div class="field"><div class="field-label">Date d'effet</div><div class="field-value" id="d-effet"></div></div>
-          <div class="field"><div class="field-label">Date Signature</div><div class="field-value" id="d-signature"></div></div>
-          <div class="field"><div class="field-label">Statut Contrat</div><div class="field-value" id="d-statutcontrat"></div></div>
-        </div>
-      </div>
-
-      <!-- BANCAIRE -->
-      <div class="section-card">
-        <div class="section-title"> INFORMATIONS BANCAIRES</div>
-        <div class="fields-grid">
-          <div class="field"><div class="field-label">IBAN</div><div class="field-value" id="d-iban"></div></div>
-          <div class="field"><div class="field-label">BIC</div><div class="field-value" id="d-bic"></div></div>
-          <div class="field"><div class="field-label">Banque</div><div class="field-value" id="d-banque"></div></div>
-        </div>
-      </div>
-
-      <!-- COMMERCIAL -->
-      <div class="section-card">
-        <div class="section-title"> INFOS COMMERCIALES</div>
-        <div class="fields-grid">
-          <div class="field"><div class="field-label">Conseiller</div><div class="field-value" id="d-conseiller"></div></div>
-          <div class="field"><div class="field-label">Agent</div><div class="field-value" id="d-agent"></div></div>
-          <div class="field"><div class="field-label">Source</div><div class="field-value" id="d-source2"></div></div>
-          <div class="field"><div class="field-label">Identifiant 1</div><div class="field-value" id="d-id1"></div></div>
-          <div class="field"><div class="field-label">Identifiant 2</div><div class="field-value" id="d-id2"></div></div>
-          <div class="field"><div class="field-label">Type</div><div class="field-value" id="d-type"></div></div>
-          <div class="field"><div class="field-label">CatÃ©gorie</div><div class="field-value" id="d-categorie"></div></div>
-          <div class="field"><div class="field-label">Sous-catÃ©gorie</div><div class="field-value" id="d-souscategorie"></div></div>
-          <div class="field"><div class="field-label">Montant</div><div class="field-value" id="d-montant"></div></div>
-          <div class="field"><div class="field-label">PÃ©riode</div><div class="field-value" id="d-periode"></div></div>
-          <div class="field"><div class="field-label">Fichier Source</div><div class="field-value" id="d-fichier"></div></div>
-        </div>
-      </div>
-
-      <!-- FAMILLE -->
+      <div class="section-card"><div class="section-title">COORDONNEES</div><div class="fields-grid">
+        <div class="field"><div class="field-label">Telephone 1</div><div class="field-value phone" id="d-tel1"></div></div>
+        <div class="field"><div class="field-label">Telephone 2</div><div class="field-value phone" id="d-tel2"></div></div>
+        <div class="field"><div class="field-label">Tel. Maella</div><div class="field-value phone" id="d-telm"></div></div>
+        <div class="field"><div class="field-label">Adresse 1</div><div class="field-value" id="d-adr1"></div></div>
+        <div class="field"><div class="field-label">Adresse 2</div><div class="field-value" id="d-adr2"></div></div>
+        <div class="field"><div class="field-label">Code Postal</div><div class="field-value" id="d-cp"></div></div>
+        <div class="field"><div class="field-label">Ville</div><div class="field-value" id="d-ville"></div></div>
+        <div class="field"><div class="field-label">CP / Ville</div><div class="field-value" id="d-cpville"></div></div>
+        <div class="field"><div class="field-label">Date naissance</div><div class="field-value" id="d-ddn"></div></div>
+      </div></div>
+      <div class="section-card"><div class="section-title">CONTRAT & ASSURANCE</div><div class="fields-grid">
+        <div class="field"><div class="field-label">Compagnie</div><div class="field-value highlight" id="d-compagnie"></div></div>
+        <div class="field"><div class="field-label">Garantie</div><div class="field-value" id="d-garantie"></div></div>
+        <div class="field"><div class="field-label">Cotisation</div><div class="field-value" id="d-cotisation"></div></div>
+        <div class="field"><div class="field-label">N Contrat</div><div class="field-value" id="d-ncontrat"></div></div>
+        <div class="field"><div class="field-label">Produit</div><div class="field-value" id="d-produit"></div></div>
+        <div class="field"><div class="field-label">Tarif</div><div class="field-value" id="d-tarif"></div></div>
+        <div class="field"><div class="field-label">Date Effet</div><div class="field-value" id="d-effet"></div></div>
+        <div class="field"><div class="field-label">Date Signature</div><div class="field-value" id="d-signature"></div></div>
+        <div class="field"><div class="field-label">Statut Contrat</div><div class="field-value" id="d-statutcontrat"></div></div>
+      </div></div>
+      <div class="section-card"><div class="section-title">INFORMATIONS BANCAIRES</div><div class="fields-grid">
+        <div class="field"><div class="field-label">IBAN</div><div class="field-value" id="d-iban"></div></div>
+        <div class="field"><div class="field-label">BIC</div><div class="field-value" id="d-bic"></div></div>
+        <div class="field"><div class="field-label">Banque</div><div class="field-value" id="d-banque"></div></div>
+      </div></div>
+      <div class="section-card"><div class="section-title">INFOS COMMERCIALES</div><div class="fields-grid">
+        <div class="field"><div class="field-label">Conseiller</div><div class="field-value" id="d-conseiller"></div></div>
+        <div class="field"><div class="field-label">Agent</div><div class="field-value" id="d-agent"></div></div>
+        <div class="field"><div class="field-label">Source</div><div class="field-value" id="d-source2"></div></div>
+        <div class="field"><div class="field-label">Identifiant 1</div><div class="field-value" id="d-id1"></div></div>
+        <div class="field"><div class="field-label">Identifiant 2</div><div class="field-value" id="d-id2"></div></div>
+        <div class="field"><div class="field-label">Type</div><div class="field-value" id="d-type"></div></div>
+        <div class="field"><div class="field-label">Categorie</div><div class="field-value" id="d-categorie"></div></div>
+        <div class="field"><div class="field-label">Sous-categorie</div><div class="field-value" id="d-souscategorie"></div></div>
+        <div class="field"><div class="field-label">Montant</div><div class="field-value" id="d-montant"></div></div>
+        <div class="field"><div class="field-label">Periode</div><div class="field-value" id="d-periode"></div></div>
+        <div class="field"><div class="field-label">Fichier Source</div><div class="field-value" id="d-fichier"></div></div>
+      </div></div>
+      <div class="section-card"><div class="section-title">OBSERVATION</div><div class="field-value" id="d-observation" style="font-size:14px;line-height:1.6"></div></div>
       <div class="famille-card" id="famille-card" style="display:none">
-        <div class="famille-title">Famille MÃŠME FAMILLE â€” MÃŠME NUMÃ‰RO</div>
-        <div class="famille-members" id="famille-members"></div>
+        <div class="famille-title">MEME FAMILLE â€” MEME NUMERO</div>
+        <div id="famille-members"></div>
       </div>
-
-      <!-- OBSERVATION -->
-      <div class="section-card">
-        <div class="section-title"> OBSERVATION</div>
-        <div class="field-value" id="d-observation" style="font-size:16px;line-height:1.6"></div>
-      </div>
-
-      <!-- RDV -->
-      <div class="rdv-card">
-        <div class="section-title">RDV PLANIFIER UN RDV</div>
-        <div class="rdv-row" style="margin-bottom:12px">
-          <div class="rdv-field">
-            <label>Agent</label>
+      <div class="rdv-card" id="rdv-section">
+        <div class="section-title">PLANIFIER UN RDV</div>
+        <div class="rdv-row">
+          <div class="rdv-field"><label>Agent</label>
             <div class="agent-btns">
               <button class="agent-btn" id="agent-br" onclick="selectAgent('Bresler',this)">BR Bresler</button>
               <button class="agent-btn" id="agent-le" onclick="selectAgent('Lefebvre',this)">LE Lefebvre</button>
@@ -320,502 +323,222 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);font
           </div>
         </div>
         <div class="rdv-row">
-          <div class="rdv-field">
-            <label>Date</label>
-            <input type="date" id="rdv-date">
-          </div>
-          <div class="rdv-field">
-            <label>Heure</label>
-            <input type="time" id="rdv-heure" value="09:00">
-          </div>
+          <div class="rdv-field"><label>Date</label><input type="date" id="rdv-date"></div>
+          <div class="rdv-field"><label>Heure</label><input type="time" id="rdv-heure" value="09:00"></div>
         </div>
-        <div class="rdv-row" style="margin-top:12px">
-          <div class="rdv-field">
-            <label>Notes</label>
-            <textarea id="rdv-notes" placeholder="Notes sur le RDV..."></textarea>
-          </div>
+        <div class="rdv-row">
+          <div class="rdv-field"><label>Notes</label><textarea id="rdv-notes" placeholder="Notes..."></textarea></div>
         </div>
-        <button class="save-rdv-btn" onclick="saveRDV()">ðŸ’¾ Enregistrer le RDV</button>
+        <button class="save-rdv-btn" onclick="saveRDV()">Enregistrer le RDV</button>
       </div>
     </div>
   </div>
 </div>
 
+<div id="rdv-popup">
+  <div id="rdv-popup-title">RDV dans 15 minutes !</div>
+  <div id="rdv-popup-content"></div>
+  <div id="rdv-popup-sub"></div>
+  <button id="rdv-popup-close" onclick="document.getElementById('rdv-popup').style.display='none'">OK compris</button>
+</div>
 <div id="toast"></div>
 
 <script type="module">
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-import { getDatabase, ref, onValue, update, get } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getDatabase,ref,onValue,update}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+const app=initializeApp({databaseURL:"https://propsect-40795-default-rtdb.europe-west1.firebasedatabase.app"});
+const db=getDatabase(app);
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDemoKey",
-  authDomain: "propsect-40795.firebaseapp.com",
-  databaseURL: "https://propsect-40795-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "propsect-40795"
+const PINS={rdv:'102023',bresler:'103024',lefebvre:'103029'};
+const LABELS={rdv:'Responsable RDV',bresler:'Bresler',lefebvre:'Lefebvre'};
+let currentUser='',pinValue='',allContacts=[],filtered=[],currentFilter='tous',currentId=null,selectedAgent='';
+let contactToGroup={},representativeIds=new Set(),notifiedRdvs=new Set();
+const COLORS=['#2563eb','#16a34a','#ea580c','#7c3aed','#0891b2','#be185d','#854d0e','#065f46'];
+function colorFor(n){let h=0;for(let c of(n||''))h=(h*31+c.charCodeAt(0))&0xffff;return COLORS[h%COLORS.length];}
+function initials(a,b){return((b||'')[0]||'').toUpperCase()+((a||'')[0]||'').toUpperCase();}
+function fv(v){return(v&&String(v).trim())||'';}
+
+window.selectUser=function(u){currentUser=u;document.getElementById('login-step1').style.display='none';document.getElementById('login-step2').style.display='block';document.getElementById('login-user-label').textContent=LABELS[u]+' â€” Code PIN';pinValue='';updatePinDisplay();};
+window.backToUsers=function(){document.getElementById('login-step1').style.display='flex';document.getElementById('login-step2').style.display='none';pinValue='';document.getElementById('pin-error').textContent='';};
+window.pinPress=function(d){if(pinValue.length>=6)return;pinValue+=d;updatePinDisplay();if(pinValue.length===6)setTimeout(pinValidate,200);};
+window.pinClear=function(){pinValue=pinValue.slice(0,-1);updatePinDisplay();};
+function updatePinDisplay(){for(let i=0;i<6;i++)document.getElementById('pd'+i).className='pin-dot'+(i<pinValue.length?' filled':'');}
+window.pinValidate=function(){
+  if(pinValue===PINS[currentUser]){
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('topbar').style.display='flex';
+    document.getElementById('app').style.display='flex';
+    setupUserView();loadData();
+  }else{document.getElementById('pin-error').textContent='Code incorrect';pinValue='';updatePinDisplay();}
 };
+window.doLogout=function(){location.reload();};
 
-let app, db, auth;
-try { app = initializeApp(firebaseConfig); db = getDatabase(app); auth = getAuth(app); } catch(e){}
-
-// ---- DATA ----
-let allContacts = [];
-let filtered = [];
-let currentFilter = 'tous';
-let currentId = null;
-let selectedAgent = '';
-const COLORS = ['#2563eb','#16a34a','#ea580c','#7c3aed','#0891b2','#be185d','#854d0e','#065f46'];
-
-function colorFor(name){
-  let h=0; for(let c of (name||'')) h=(h*31+c.charCodeAt(0))&0xffff;
-  return COLORS[h%COLORS.length];
-}
-function initials(nom,prenom){
-  return ((prenom||'')[0]||'') + ((nom||'')[0]||'');
-}
-function fv(v){return (v&&String(v).trim())||''}
-
-// ---- FAMILY GROUPING ----
-let familyGroups = []; // array of arrays of contact ids
-let contactToGroup = {}; // contact id -> group index
-let representativeIds = new Set(); // ids shown in list
-
-function buildFamilyGroups(contacts) {
-  const n = contacts.length;
-  const parent = Array.from({length: n}, (_, i) => i);
-  function find(x) { while(parent[x]!==x) x=parent[x]=parent[parent[x]]; return x; }
-  function union(a,b) { a=find(a); b=find(b); if(a!==b) parent[b]=a; }
-
-  // Build tel -> indices map
-  const telMap = {};
-  contacts.forEach((c, i) => {
-    const t1 = (c.tel1||'').replace(/\s/g,'');
-    const t2 = (c.tel2||'').replace(/\s/g,'');
-    if(t1) { if(!telMap[t1]) telMap[t1]=[]; telMap[t1].push(i); }
-    if(t2) { if(!telMap[t2]) telMap[t2]=[]; telMap[t2].push(i); }
-  });
-
-  // Union contacts sharing tel1 or tel2
-  Object.values(telMap).forEach(ids => {
-    for(let i=1; i<ids.length; i++) union(ids[0], ids[i]);
-  });
-
-  // Build groups
-  const groups = {};
-  contacts.forEach((_, i) => {
-    const r = find(i);
-    if(!groups[r]) groups[r] = [];
-    groups[r].push(i);
-  });
-
-  familyGroups = Object.values(groups);
-  contactToGroup = {};
-  representativeIds = new Set();
-
-  familyGroups.forEach(group => {
-    // Representative = first member with a phone
-    const rep = group[0];
-    representativeIds.add(contacts[rep].id);
-    group.forEach(idx => {
-      contactToGroup[contacts[idx].id] = group.map(i => contacts[i].id);
-    });
-  });
+function setupUserView(){
+  const b=document.getElementById('user-badge');
+  const colors={rdv:'background:#dbeafe;color:#1d4ed8',bresler:'background:#dcfce7;color:#15803d',lefebvre:'background:#ede9fe;color:#6d28d9'};
+  b.textContent=LABELS[currentUser];b.style.cssText=colors[currentUser]+';padding:4px 10px;border-radius:20px;font-size:11px;font-weight:800;flex-shrink:0';
+  document.getElementById('btn-agenda').textContent=currentUser==='rdv'?'Agenda RDV':'Mes RDV';
 }
 
-// ---- LOAD FROM FIREBASE ----
-function loadData(){
-  if(!db) return loadFromEmbed();
-  const r = ref(db,'contacts');
-  onValue(r, snap=>{
-    const data = snap.val();
-    if(!data){ loadFromEmbed(); return; }
-    allContacts = Array.isArray(data) ? data : Object.values(data);
-    buildFamilyGroups(allContacts);
-    render();
-  }, ()=>loadFromEmbed());
+function buildFamilyGroups(contacts){
+  const parent=Array.from({length:contacts.length},(_,i)=>i);
+  function find(x){while(parent[x]!==x)x=parent[x]=parent[parent[x]];return x;}
+  function union(a,b){a=find(a);b=find(b);if(a!==b)parent[b]=a;}
+  const telMap={};
+  contacts.forEach((c,i)=>{const t1=(c.tel1||'').replace(/\s/g,'');const t2=(c.tel2||'').replace(/\s/g,'');if(t1){if(!telMap[t1])telMap[t1]=[];telMap[t1].push(i);}if(t2){if(!telMap[t2])telMap[t2]=[];telMap[t2].push(i);}});
+  Object.values(telMap).forEach(ids=>{for(let i=1;i<ids.length;i++)union(ids[0],ids[i]);});
+  const groups={};contacts.forEach((_,i)=>{const r=find(i);if(!groups[r])groups[r]=[];groups[r].push(i);});
+  contactToGroup={};representativeIds=new Set();
+  Object.values(groups).forEach(group=>{representativeIds.add(contacts[group[0]].id);group.forEach(idx=>{contactToGroup[contacts[idx].id]=group.map(i=>contacts[i].id);});});
 }
 
-function loadFromEmbed(){
-  const el = document.getElementById('CODATA');
-  if(el){ try{ allContacts = JSON.parse(el.textContent); }catch(e){} }
-  buildFamilyGroups(allContacts);
-  render();
-}
+function loadData(){onValue(ref(db,'contacts'),snap=>{const data=snap.val();if(!data)return;allContacts=Array.isArray(data)?data:Object.values(data);buildFamilyGroups(allContacts);render();startRDVChecker();});}
 
-// ---- AGENDA ----
-let currentAgentFilter = 'tous';
-
-window.showAgenda = function(agent) {
-  document.getElementById('left').style.display = 'none';
-  document.getElementById('right').style.display = 'none';
-  document.getElementById('agenda').style.display = 'block';
-  document.getElementById('btn-contacts').style.display = 'block';
-  document.getElementById('btn-agenda-br').style.display = 'none';
-  document.getElementById('btn-agenda-le').style.display = 'none';
-  currentAgentFilter = agent || 'tous';
-  // Set active filter button
-  document.querySelectorAll('.agent-filter-btn').forEach(b=>b.className='agent-filter-btn');
-  if(agent==='Bresler') { document.getElementById('af-br').className='agent-filter-btn active-br'; }
-  else if(agent==='Lefebvre') { document.getElementById('af-le').className='agent-filter-btn active-le'; }
-  else { document.getElementById('af-all').className='agent-filter-btn active-all'; }
-  renderAgenda();
-};
-
-window.showContacts = function() {
-  document.getElementById('left').style.display = 'flex';
-  document.getElementById('right').style.display = 'block';
-  document.getElementById('agenda').style.display = 'none';
-  document.getElementById('btn-contacts').style.display = 'none';
-  document.getElementById('btn-agenda-br').style.display = 'block';
-  document.getElementById('btn-agenda-le').style.display = 'block';
-};
-
-window.agentFilter = function(agent, el) {
-  currentAgentFilter = agent;
-  document.querySelectorAll('.agent-filter-btn').forEach(b=>b.className='agent-filter-btn');
-  if(agent==='Bresler') el.className='agent-filter-btn active-br';
-  else if(agent==='Lefebvre') el.className='agent-filter-btn active-le';
-  else el.className='agent-filter-btn active-all';
-  renderAgenda();
-};
-
-function renderAgenda() {
-  // Get all contacts with RDV
-  let rdvContacts = allContacts.filter(c => c.rdvDate && c.rdvDate.trim());
-  if(currentAgentFilter !== 'tous') {
-    rdvContacts = rdvContacts.filter(c => c.rdvAgent === currentAgentFilter);
-  }
-
-  // Sort by date then time
-  rdvContacts.sort((a,b) => {
-    const da = (a.rdvDate||'') + (a.rdvHeure||'');
-    const db = (b.rdvDate||'') + (b.rdvHeure||'');
-    return da.localeCompare(db);
-  });
-
-  const title = currentAgentFilter==='tous' ? 'RDV Tous les RDV' :
-    currentAgentFilter==='Bresler' ? 'RDV RDV de Bresler' : 'RDV RDV de Lefebvre';
-  document.getElementById('agenda-title').textContent = title + ' (' + rdvContacts.length + ')';
-
-  if(rdvContacts.length === 0) {
-    document.getElementById('agenda-list').innerHTML = '<div class="no-rdv"> Aucun RDV trouvÃ©</div>';
-    return;
-  }
-
-  // Group by date
-  const today = new Date().toISOString().split('T')[0];
-  const groups = {};
-  rdvContacts.forEach(c => {
-    const d = c.rdvDate || 'Sans date';
-    if(!groups[d]) groups[d] = [];
-    groups[d].push(c);
-  });
-
-  let html = '';
-  Object.keys(groups).sort().forEach(date => {
-    const isToday = date === today;
-    const isPast = date < today;
-    let dateLabel = date;
-    if(isToday) dateLabel = '> AUJOURD\'HUI â€” ' + date;
-    else if(isPast) dateLabel = 'âŒ› ' + date + ' (passÃ©)';
-    else dateLabel = 'â–º ' + date;
-
-    html += `<div class="rdv-day">
-      <div class="rdv-day-title${isToday?' today':''}">${dateLabel}</div>`;
-
-    groups[date].forEach(c => {
-      const agentClass = c.rdvAgent==='Bresler' ? 'br' : c.rdvAgent==='Lefebvre' ? 'le' : '';
-      const tel = fv(c.tel1)||fv(c.tel2)||fv(c.telm)||'â€”';
-      html += `<div class="rdv-item agent-${agentClass}" onclick="openContactFromAgenda(${c.id})">
-        <div class="rdv-time">${c.rdvHeure||'â€”'}</div>
-        <div class="rdv-info">
-          <div class="rdv-name">${c.prenom||''} ${c.nom||''}</div>
-          <div class="rdv-tel"> ${tel}</div>
-          ${c.rdvNotes ? `<div class="rdv-notes-text"> ${c.rdvNotes}</div>` : ''}
-        </div>
-        ${c.rdvAgent ? `<span class="rdv-agent-badge ${agentClass}">${c.rdvAgent}</span>` : ''}
-      </div>`;
-    });
-    html += '</div>';
-  });
-
-  document.getElementById('agenda-list').innerHTML = html;
-}
-
-window.openContactFromAgenda = function(id) {
-  const c = allContacts.find(x=>x.id===id);
-  if(!c) return;
-  showContacts();
-  setTimeout(()=>selectContact(c), 100);
-};
-
-// ---- LOAD DIRECT (pas de connexion) ----
-loadData();
-
-function showLogin(){
-  document.body.innerHTML = `
-  <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg)">
-  <div style="background:#fff;border-radius:16px;padding:40px;width:360px;box-shadow:0 8px 32px rgba(0,0,0,0.12)">
-    <div style="font-size:26px;font-weight:800;color:#2563eb;margin-bottom:8px">ProspectBL</div>
-    <div style="color:#5a6a80;margin-bottom:24px;font-weight:600">Connexion</div>
-    <input id="li-email" type="email" placeholder="Email" style="width:100%;border:2px solid #dde3ec;border-radius:8px;padding:12px;font-size:15px;font-family:inherit;margin-bottom:10px;outline:none">
-    <input id="li-pw" type="password" placeholder="Mot de passe" style="width:100%;border:2px solid #dde3ec;border-radius:8px;padding:12px;font-size:15px;font-family:inherit;margin-bottom:16px;outline:none">
-    <div id="li-err" style="color:#dc2626;font-size:13px;margin-bottom:8px"></div>
-    <button onclick="doLogin()" style="width:100%;background:#2563eb;color:#fff;border:none;border-radius:10px;padding:13px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit">Se connecter</button>
-  </div></div>`;
-  window.doLogin=()=>{
-    const e=document.getElementById('li-email').value;
-    const p=document.getElementById('li-pw').value;
-    signInWithEmailAndPassword(auth,e,p).catch(err=>{document.getElementById('li-err').textContent='Email ou mot de passe incorrect';});
-  };
-}
-
-window.logout=()=>{ if(auth) signOut(auth); };
-
-// ---- RENDER ----
-function render(){
-  updateStats();
-  filterContacts();
-}
+function render(){updateStats();filterContacts();}
 
 function updateStats(){
-  const s={rdv:0,signe:0,rappel:0,nrp:0,ni:0};
-  for(const c of allContacts){
-    if(c.statut==='rdv') s.rdv++;
-    else if(c.statut==='signe') s.signe++;
-    else if(c.statut==='rappel') s.rappel++;
-    else if(c.statut==='nrp') s.nrp++;
-    else if(c.statut==='ni') s.ni++;
-  }
+  const rdvBr=allContacts.filter(c=>c.statut==='rdv'&&c.rdvAgent==='Bresler');
+  const rdvLe=allContacts.filter(c=>c.statut==='rdv'&&c.rdvAgent==='Lefebvre');
+  const rdvAll=allContacts.filter(c=>c.statut==='rdv');
+  let sign=0,rappel=0,nrp=0,ni=0;
+  allContacts.forEach(c=>{if(c.statut==='signe')sign++;else if(c.statut==='rappel')rappel++;else if(['nrp1','nrp2','nrp3'].includes(c.statut))nrp++;else if(c.statut==='ni')ni++;});
   document.getElementById('st-total').textContent=allContacts.length;
-  document.getElementById('st-rdv').textContent=s.rdv;
-  document.getElementById('st-sign').textContent=s.signe;
-  document.getElementById('st-rappel').textContent=s.rappel;
-  document.getElementById('st-nrp').textContent=s.nrp;
-  document.getElementById('st-ni').textContent=s.ni;
+  document.getElementById('st-rdv').textContent=rdvAll.length;
+  document.getElementById('st-rdv-br').textContent=rdvBr.length;
+  document.getElementById('st-rdv-le').textContent=rdvLe.length;
+  document.getElementById('st-sign').textContent=sign;
+  document.getElementById('st-rappel').textContent=rappel;
+  document.getElementById('st-nrp').textContent=nrp;
+  document.getElementById('st-ni').textContent=ni;
+  function mkTip(contacts){if(!contacts.length)return'<div style="color:#94a3b8">Aucun RDV</div>';return contacts.slice(0,15).map(c=>`<div class="stat-tooltip-item">${c.prenom||''} ${c.nom||''} â€” ${c.rdvDate||''} ${c.rdvHeure||''}</div>`).join('')+(contacts.length>15?`<div style="color:#94a3b8">+${contacts.length-15} autres</div>` : '');}
+  document.getElementById('tooltip-rdv-all').innerHTML=mkTip(rdvAll);
+  document.getElementById('tooltip-rdv-br').innerHTML=mkTip(rdvBr);
+  document.getElementById('tooltip-rdv-le').innerHTML=mkTip(rdvLe);
 }
 
-window.setFilter=(f,el)=>{
-  currentFilter=f;
-  document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('active'));
-  el.classList.add('active');
-  filterContacts();
-};
-
-window.filterContacts=()=>{
+window.setFilter=function(f,el){currentFilter=f;document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('active'));el.classList.add('active');filterContacts();};
+window.filterContacts=function(){
   const q=(document.getElementById('search').value||'').toLowerCase().trim();
-  filtered = allContacts.filter(c=>{
-    // Only show representative of each family group
-    if(!representativeIds.has(c.id)) return false;
-    const matchFilter = currentFilter==='tous' ||
-      (currentFilter==='sansrdv' && !c.statut) ||
-      c.statut===currentFilter;
-    if(!matchFilter) return false;
-    if(!q) return true;
-    // Search also in family members
-    const groupIds = contactToGroup[c.id] || [c.id];
-    return groupIds.some(gid => {
-      const gc = allContacts.find(x=>x.id===gid);
-      if(!gc) return false;
-      const hay = [gc.nom,gc.prenom,gc.tel1,gc.tel2,gc.ville,gc.cp,gc.compagnie,gc.adresse1].join(' ').toLowerCase();
-      return hay.includes(q);
-    });
+  filtered=allContacts.filter(c=>{
+    if(!representativeIds.has(c.id))return false;
+    const matchFilter=currentFilter==='tous'||(currentFilter==='sansrdv'&&!c.statut)||(currentFilter==='nrp'&&['nrp1','nrp2','nrp3'].includes(c.statut))||c.statut===currentFilter;
+    if(!matchFilter)return false;
+    if(!q)return true;
+    const gids=contactToGroup[c.id]||[c.id];
+    return gids.some(gid=>{const gc=allContacts.find(x=>x.id===gid);if(!gc)return false;return[gc.nom,gc.prenom,gc.tel1,gc.tel2,gc.ville,gc.compagnie].join(' ').toLowerCase().includes(q);});
   });
-  document.getElementById('contact-count').textContent = filtered.length + ' contact' + (filtered.length>1?'s':'');
+  document.getElementById('contact-count').textContent=filtered.length+' contact'+(filtered.length>1?'s':'');
   renderList();
 };
 
 function renderList(){
-  const list = document.getElementById('contact-list');
-  list.innerHTML = '';
+  const list=document.getElementById('contact-list');list.innerHTML='';
   for(const c of filtered){
-    const div = document.createElement('div');
-    div.className = 'citem' + (c.id===currentId?' selected':'');
-    const ini = initials(c.nom,c.prenom).toUpperCase();
-    const col = colorFor(c.nom);
-    const tel = fv(c.tel1)||fv(c.tel2)||fv(c.telm)||'Pas de tÃ©l';
-    const badge = c.statut ? `<span class="badge badge-${c.statut==='signe'?'sign':c.statut==='ni'?'ni':c.statut}">${c.statut==='signe'?'SignÃ©':c.statut==='rappel'?'Rappel':c.statut==='nrp'?'NRP':c.statut==='ni'?'Pas int.':'RDV'}</span>` : '';
-    const groupIds = contactToGroup[c.id] || [c.id];
-    const hasFamille = groupIds.length > 1;
-    const familleNoms = hasFamille ? groupIds
-      .filter(gid => gid !== c.id)
-      .map(gid => { const m = allContacts.find(x=>x.id===gid); return m ? (m.prenom||'') + ' ' + (m.nom||'') : ''; })
-      .filter(Boolean)
-      .join(', ') : '';
-    div.innerHTML = `
-      <div class="cavatar" style="background:${col}">${ini}</div>
-      <div class="cinfo">
-        <div class="cname">${c.prenom||''} ${c.nom||''}${hasFamille ? ' <span style="font-size:11px;color:#2563eb">Famille '+groupIds.length+'</span>' : ''}</div>
-        <div class="ctel">${tel}</div>
-        ${familleNoms ? `<div style="font-size:11px;color:#7c3aed;font-weight:600;margin-top:2px"> ${familleNoms}</div>` : ''}
-      </div>
-      <div class="cstatus">${badge}</div>`;
-    div.onclick = ()=>selectContact(c);
-    list.appendChild(div);
+    const div=document.createElement('div');div.className='citem'+(c.id===currentId?' selected':'');
+    const ini=initials(c.nom,c.prenom);const col=colorFor(c.nom);
+    const tel=fv(c.tel1)||fv(c.tel2)||fv(c.telm)||'Pas de tel';
+    const gids=contactToGroup[c.id]||[c.id];const hasFam=gids.length>1;
+    const famNoms=hasFam?gids.filter(g=>g!==c.id).map(g=>{const m=allContacts.find(x=>x.id===g);return m?(m.prenom||'')+' '+(m.nom||''):''}).filter(Boolean).join(', '):'';
+    const bmap={'signe':'Signe','rappel':'Rappel','nrp1':'NRP1','nrp2':'NRP2','nrp3':'NRP3+','ni':'Pas int.','rdv':'RDV'};
+    const bcmap={'signe':'signe','rappel':'rappel','nrp1':'nrp1','nrp2':'nrp2','nrp3':'nrp3','ni':'ni','rdv':'rdv'};
+    const badgeHtml=c.statut&&bmap[c.statut]?`<span class="badge badge-${bcmap[c.statut]}">${bmap[c.statut]}</span>`:'';
+    div.innerHTML=`<div class="cavatar" style="background:${col}">${ini}</div><div class="cinfo"><div class="cname">${c.prenom||''} ${c.nom||''}${hasFam?` <span style="font-size:9px;color:#7c3aed;font-weight:800">Fam.${gids.length}</span>`:''}</div><div class="ctel">${tel}</div>${famNoms?`<div class="cfamille">${famNoms}</div>`:''}</div><div class="cstatus">${badgeHtml}</div>`;
+    div.onclick=()=>selectContact(c);list.appendChild(div);
   }
 }
 
 function selectContact(c){
-  currentId = c.id;
-  renderList();
-  document.getElementById('placeholder').style.display='none';
-  const det = document.getElementById('detail');
-  det.style.display='block';
+  currentId=c.id;renderList();
+  document.getElementById('placeholder').style.display='none';document.getElementById('detail').style.display='block';
+  document.getElementById('d-avatar').style.background=colorFor(c.nom);document.getElementById('d-avatar').textContent=initials(c.nom,c.prenom);
+  document.getElementById('d-name').textContent=(c.prenom||'')+' '+(c.nom||'');document.getElementById('d-src').textContent=fv(c.fichierSource);
+  function sv(id,v,cls=''){const el=document.getElementById(id);if(!el)return;const val=fv(v);el.textContent=val||'â€”';el.className='field-value'+(val?'':' empty')+(cls?' '+cls:'');}
+  sv('d-tel1',c.tel1,'phone');sv('d-tel2',c.tel2,'phone');sv('d-telm',c.telm,'phone');sv('d-adr1',c.adresse1);sv('d-adr2',c.adresse2);sv('d-cp',c.cp);sv('d-ville',c.ville);sv('d-cpville',c.cpVille);sv('d-ddn',c.dateNaissance);
+  sv('d-compagnie',c.compagnie,'highlight');sv('d-garantie',c.garantie);sv('d-cotisation',c.cotisation);sv('d-ncontrat',c.nContrat);sv('d-produit',c.produit);sv('d-tarif',c.tarif);sv('d-effet',c.dateEffet);sv('d-signature',c.dateSignature);sv('d-statutcontrat',c.statutContrat);
+  sv('d-iban',c.iban);sv('d-bic',c.bic);sv('d-banque',c.banque);sv('d-conseiller',c.conseiller);sv('d-agent',c.agent);sv('d-source2',c.source);sv('d-id1',c.identifiant1);sv('d-id2',c.identifiant2);sv('d-type',c.type);sv('d-categorie',c.categorie);sv('d-souscategorie',c.sousCategorie);sv('d-montant',c.montant);sv('d-periode',c.periode);sv('d-fichier',c.fichierSource);
+  const obs=document.getElementById('d-observation');obs.textContent=fv(c.observation)||'â€”';obs.className=fv(c.observation)?'':'field-value empty';
+  ['sign','rappel','nrp1','nrp2','nrp3','ni'].forEach(s=>document.getElementById('btn-'+s).classList.remove('abtn-active'));
+  if(c.statut==='signe')document.getElementById('btn-sign').classList.add('abtn-active');
+  else if(c.statut==='rappel')document.getElementById('btn-rappel').classList.add('abtn-active');
+  else if(c.statut==='nrp1')document.getElementById('btn-nrp1').classList.add('abtn-active');
+  else if(c.statut==='nrp2')document.getElementById('btn-nrp2').classList.add('abtn-active');
+  else if(c.statut==='nrp3')document.getElementById('btn-nrp3').classList.add('abtn-active');
+  else if(c.statut==='ni')document.getElementById('btn-ni').classList.add('abtn-active');
+  document.getElementById('rdv-date').value=c.rdvDate||'';document.getElementById('rdv-heure').value=c.rdvHeure||'09:00';document.getElementById('rdv-notes').value=c.rdvNotes||'';
+  selectedAgent=c.rdvAgent||'';document.querySelectorAll('.agent-btn').forEach(b=>b.classList.remove('selected'));
+  if(selectedAgent==='Bresler')document.getElementById('agent-br').classList.add('selected');
+  if(selectedAgent==='Lefebvre')document.getElementById('agent-le').classList.add('selected');
+  const gids=contactToGroup[c.id]||[c.id];const autres=gids.filter(g=>g!==c.id).map(g=>allContacts.find(x=>x.id===g)).filter(Boolean);
+  const fc=document.getElementById('famille-card');const fm=document.getElementById('famille-members');
+  if(autres.length>0){fc.style.display='block';fm.innerHTML=autres.map(m=>`<div class="fmember" onclick="selectContactById(${m.id})"><div class="fmember-name">${m.prenom||''} ${m.nom||''} â€” <span style="color:var(--accent)">${fv(m.tel1)||fv(m.tel2)||'â€”'}</span></div><div class="fmember-details">${[m.dateNaissance,m.compagnie,m.garantie,m.observation].filter(Boolean).join(' | ')}</div></div>`).join('');}else{fc.style.display='none';}
+  document.getElementById('right').scrollTop=0;
+}
 
-  const ini = initials(c.nom,c.prenom).toUpperCase();
-  const col = colorFor(c.nom);
-  document.getElementById('d-avatar').style.background = col;
-  document.getElementById('d-avatar').textContent = ini;
-  document.getElementById('d-name').textContent = (c.prenom||'') + ' ' + (c.nom||'');
-  document.getElementById('d-source').textContent = fv(c.fichierSource)||'';
+window.selectContactById=function(id){const c=allContacts.find(x=>x.id===id);if(c)selectContact(c);};
+window.selectAgent=function(a,el){selectedAgent=a;document.querySelectorAll('.agent-btn').forEach(b=>b.classList.remove('selected'));el.classList.add('selected');};
+window.setStatus=function(s){const c=allContacts.find(x=>x.id===currentId);if(!c)return;c.statut=c.statut===s?'':s;update(ref(db,'contacts/'+c.id),c);selectContact(c);updateStats();renderList();toast('Statut mis a jour');};
+window.saveRDV=function(){const c=allContacts.find(x=>x.id===currentId);if(!c)return;c.rdvDate=document.getElementById('rdv-date').value;c.rdvHeure=document.getElementById('rdv-heure').value;c.rdvNotes=document.getElementById('rdv-notes').value;c.rdvAgent=selectedAgent;if(c.rdvDate&&!c.statut)c.statut='rdv';update(ref(db,'contacts/'+c.id),c);updateStats();renderList();if(document.getElementById('agenda').style.display!=='none')renderAgenda();toast('RDV enregistre !');};
 
-  function sv(id,v,cls=''){
-    const el=document.getElementById(id);
-    if(!el)return;
-    const val=fv(v);
-    el.textContent=val||'â€”';
-    el.className='field-value'+(val?'':' empty')+(cls?' '+cls:'');
-  }
+let currentAgentFilter='tous';
+window.showAgenda=function(){
+  document.getElementById('left').style.display='none';document.getElementById('right').style.display='none';document.getElementById('agenda').style.display='block';
+  document.getElementById('btn-contacts').style.display='block';document.getElementById('btn-agenda').style.display='none';
+  if(currentUser==='bresler'){currentAgentFilter='Bresler';document.getElementById('af-br').className='agent-filter-btn active-br';document.getElementById('af-all').className='agent-filter-btn';document.getElementById('af-le').className='agent-filter-btn';}
+  else if(currentUser==='lefebvre'){currentAgentFilter='Lefebvre';document.getElementById('af-le').className='agent-filter-btn active-le';document.getElementById('af-all').className='agent-filter-btn';document.getElementById('af-br').className='agent-filter-btn';}
+  renderAgenda();
+};
+window.showContacts=function(){document.getElementById('left').style.display='flex';document.getElementById('right').style.display='block';document.getElementById('agenda').style.display='none';document.getElementById('btn-contacts').style.display='none';document.getElementById('btn-agenda').style.display='block';};
+window.agentFilter=function(agent,el){currentAgentFilter=agent;document.querySelectorAll('.agent-filter-btn').forEach(b=>b.className='agent-filter-btn');if(agent==='Bresler')el.className='agent-filter-btn active-br';else if(agent==='Lefebvre')el.className='agent-filter-btn active-le';else el.className='agent-filter-btn active-all';renderAgenda();};
 
-  sv('d-tel1',c.tel1,'phone'); sv('d-tel2',c.tel2,'phone'); sv('d-telm',c.telm,'phone');
-  sv('d-adr1',c.adresse1); sv('d-adr2',c.adresse2);
-  sv('d-cp',c.cp); sv('d-ville',c.ville); sv('d-cpville',c.cpVille);
-  sv('d-ddn',c.dateNaissance);
-  sv('d-compagnie',c.compagnie,'highlight');
-  sv('d-garantie',c.garantie); sv('d-cotisation',c.cotisation);
-  sv('d-ncontrat',c.nContrat); sv('d-produit',c.produit);
-  sv('d-tarif',c.tarif); sv('d-effet',c.dateEffet);
-  sv('d-signature',c.dateSignature); sv('d-statutcontrat',c.statutContrat);
-  sv('d-iban',c.iban); sv('d-bic',c.bic); sv('d-banque',c.banque);
-  sv('d-conseiller',c.conseiller); sv('d-agent',c.agent);
-  sv('d-source2',c.source); sv('d-id1',c.identifiant1); sv('d-id2',c.identifiant2);
-  sv('d-type',c.type); sv('d-categorie',c.categorie);
-  sv('d-souscategorie',c.sousCategorie); sv('d-montant',c.montant); sv('d-periode',c.periode);
-  sv('d-fichier',c.fichierSource);
-
-  const obs = document.getElementById('d-observation');
-  obs.textContent = fv(c.observation)||'â€”';
-  obs.className = fv(c.observation)?'':'field-value empty';
-
-  // Status buttons
-  ['sign','rappel','nrp','ni'].forEach(s=>{
-    document.getElementById('btn-'+s).classList.remove('abtn-active');
+function renderAgenda(){
+  let rdvC=allContacts.filter(c=>c.rdvDate&&c.rdvDate.trim());
+  if(currentAgentFilter!=='tous')rdvC=rdvC.filter(c=>c.rdvAgent===currentAgentFilter);
+  rdvC.sort((a,b)=>((a.rdvDate||'')+(a.rdvHeure||'')).localeCompare((b.rdvDate||'')+(b.rdvHeure||'')));
+  const lbl=currentAgentFilter==='tous'?'Tous les RDV':currentAgentFilter==='Bresler'?'RDV de Bresler':'RDV de Lefebvre';
+  document.getElementById('agenda-title').textContent=lbl+' ('+rdvC.length+')';
+  if(!rdvC.length){document.getElementById('agenda-list').innerHTML='<div class="no-rdv">Aucun RDV trouve</div>';return;}
+  const today=new Date().toISOString().split('T')[0];const groups={};
+  rdvC.forEach(c=>{const d=c.rdvDate||'?';if(!groups[d])groups[d]=[];groups[d].push(c);});
+  let html='';
+  Object.keys(groups).sort().forEach(date=>{
+    const isToday=date===today;const isPast=date<today;
+    const lbl2=isPast?'[PASSE] '+date:isToday?'AUJOURD\'HUI â€” '+date:'A VENIR â€” '+date;
+    html+=`<div class="rdv-day"><div class="rdv-day-title${isToday?' today':''}">${lbl2}</div>`;
+    groups[date].forEach(c=>{const ac=c.rdvAgent==='Bresler'?'br':c.rdvAgent==='Lefebvre'?'le':'';const tel=fv(c.tel1)||fv(c.tel2)||'â€”';html+=`<div class="rdv-item agent-${ac}" onclick="openFromAgenda(${c.id})"><div class="rdv-time">${c.rdvHeure||'â€”'}</div><div class="rdv-info"><div class="rdv-name">${c.prenom||''} ${c.nom||''}</div><div class="rdv-tel">${tel}</div>${c.rdvNotes?`<div class="rdv-notes-text">${c.rdvNotes}</div>`:''}</div>${c.rdvAgent?`<span class="rdv-agent-badge ${ac}">${c.rdvAgent}</span>`:''}</div>`;});
+    html+='</div>';
   });
-  if(c.statut==='signe') document.getElementById('btn-sign').classList.add('abtn-active');
-  else if(c.statut==='rappel') document.getElementById('btn-rappel').classList.add('abtn-active');
-  else if(c.statut==='nrp') document.getElementById('btn-nrp').classList.add('abtn-active');
-  else if(c.statut==='ni') document.getElementById('btn-ni').classList.add('abtn-active');
+  document.getElementById('agenda-list').innerHTML=html;
+}
+window.openFromAgenda=function(id){const c=allContacts.find(x=>x.id===id);if(!c)return;showContacts();setTimeout(()=>selectContact(c),100);};
 
-  // RDV prefill
-  if(c.rdvDate) document.getElementById('rdv-date').value=c.rdvDate;
-  if(c.rdvHeure) document.getElementById('rdv-heure').value=c.rdvHeure;
-  if(c.rdvNotes) document.getElementById('rdv-notes').value=c.rdvNotes;
-  selectedAgent = c.rdvAgent||'';
-  document.querySelectorAll('.agent-btn').forEach(b=>b.classList.remove('selected'));
-  if(selectedAgent==='Bresler') document.getElementById('agent-br').classList.add('selected');
-  if(selectedAgent==='Lefebvre') document.getElementById('agent-le').classList.add('selected');
-
-  // FAMILLE
-  const groupIds = contactToGroup[c.id] || [c.id];
-  const autresMembres = groupIds.filter(gid => gid !== c.id).map(gid => allContacts.find(x=>x.id===gid)).filter(Boolean);
-  const familleCard = document.getElementById('famille-card');
-  const familleMembers = document.getElementById('famille-members');
-  if(autresMembres.length > 0) {
-    familleCard.style.display = 'block';
-    familleMembers.innerHTML = autresMembres.map(m => {
-      const tel = fv(m.tel1)||fv(m.tel2)||fv(m.telm)||'â€”';
-      const details = [
-        m.dateNaissance ? `RDV ${m.dateNaissance}` : '',
-        m.compagnie ? `ðŸ¢ ${m.compagnie}` : '',
-        m.adresse1 ? ` ${m.adresse1}` : '',
-        m.cp ? m.cp : '',
-        m.ville ? m.ville : '',
-        m.garantie ? ` ${m.garantie}` : '',
-        m.cotisation ? ` ${m.cotisation}` : '',
-        m.nContrat ? ` NÂ° ${m.nContrat}` : '',
-        m.observation ? ` ${m.observation}` : '',
-      ].filter(Boolean);
-      return `<div class="fmember" onclick="selectContact(allContacts.find(x=>x.id===${m.id}))">
-        <div class="fmember-name">${m.prenom||''} ${m.nom||''} â€” <span style="color:var(--accent)">${tel}</span></div>
-        ${details.length ? `<div class="fmember-details">${details.map(d=>`<span class="fmember-detail">${d}</span>`).join('')}</div>` : ''}
-      </div>`;
-    }).join('');
-  } else {
-    familleCard.style.display = 'none';
-  }
-
-  det.scrollIntoView({behavior:'smooth',block:'start'});
+function startRDVChecker(){checkRDVs();setInterval(checkRDVs,60000);}
+function checkRDVs(){
+  if(currentUser==='rdv')return;
+  const agentName=currentUser==='bresler'?'Bresler':'Lefebvre';
+  const now=new Date();const today=now.toISOString().split('T')[0];
+  allContacts.filter(c=>c.rdvAgent===agentName&&c.rdvDate===today&&c.rdvHeure).forEach(c=>{
+    const[h,m]=(c.rdvHeure||'').split(':').map(Number);const rdvT=new Date(now);rdvT.setHours(h,m,0,0);
+    const diff=(rdvT-now)/60000;const key=c.id+'_'+c.rdvDate+'_'+c.rdvHeure;
+    if(diff>0&&diff<=15&&!notifiedRdvs.has(key)){notifiedRdvs.add(key);showRDVPopup(c,Math.round(diff));}
+  });
+}
+function showRDVPopup(c,mins){
+  document.getElementById('rdv-popup-title').textContent='RDV dans '+mins+' minute'+(mins>1?'s':'')+'!';
+  document.getElementById('rdv-popup-content').textContent=(c.prenom||'')+' '+(c.nom||'');
+  document.getElementById('rdv-popup-sub').textContent=fv(c.tel1)||fv(c.tel2)||'';
+  document.getElementById('rdv-popup').style.display='block';
+  setTimeout(()=>document.getElementById('rdv-popup').style.display='none',30000);
 }
 
-window.selectAgent=(a,el)=>{
-  selectedAgent=a;
-  document.querySelectorAll('.agent-btn').forEach(b=>b.classList.remove('selected'));
-  el.classList.add('selected');
-};
-
-window.setStatus=(s)=>{
-  const c=allContacts.find(x=>x.id===currentId);
-  if(!c)return;
-  c.statut = c.statut===s ? '' : s;
-  saveToFirebase(c);
-  selectContact(c);
-  updateStats();
-  renderList();
-  toast('Statut mis Ã  jour ');
-};
-
-window.saveRDV=()=>{
-  const c=allContacts.find(x=>x.id===currentId);
-  if(!c)return;
-  c.rdvDate=document.getElementById('rdv-date').value;
-  c.rdvHeure=document.getElementById('rdv-heure').value;
-  c.rdvNotes=document.getElementById('rdv-notes').value;
-  c.rdvAgent=selectedAgent;
-  if(c.rdvDate && !c.statut) c.statut='rdv';
-  saveToFirebase(c);
-  updateStats();
-  renderList();
-  if(document.getElementById('agenda').style.display !== 'none') renderAgenda();
-  toast('RDV enregistrÃ© RDV');
-};
-
-function saveToFirebase(c){
-  if(!db) return;
-  const r = ref(db,'contacts/'+c.id);
-  update(r, c).catch(console.error);
-}
-
-function toast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg;
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2500);
-}
-
-window.exportData=()=>{
-  const fields=['fichierSource','nom','prenom','dateNaissance','tel1','tel2','telm','adresse1','adresse2','cp','ville','cpVille','compagnie','garantie','cotisation','nContrat','iban','bic','banque','observation','rdvDate','rdvHeure','rdvAgent','dateEffet','dateSignature','produit','tarif','conseiller','source','identifiant1','identifiant2','type','categorie','sousCategorie','montant','periode','statut'];
-  const headers=['FICHIER SOURCE','NOM','PRÃ‰NOM','DATE NAISSANCE','TÃ‰LÃ‰PHONE 1','TÃ‰LÃ‰PHONE 2','TÃ‰LÃ‰PHONE MAELLA','ADRESSE 1','ADRESSE 2','CODE POSTAL','VILLE','CODE POSTAL / VILLE','COMPAGNIE','GARANTIE','COTISATION','NÂ° CONTRAT','IBAN','BIC','BANQUE','OBSERVATION','DATE RDV','HEURE RDV','AGENT','DATE D\'EFFET','DATE SIGNATURE','PRODUIT','TARIF','CONSEILLER','SOURCE','IDENTIFIANT 1','IDENTIFIANT 2','TYPE','CATÃ‰GORIE','SOUS-CATÃ‰GORIE','MONTANT','PÃ‰RIODE','STATUT'];
+window.exportData=function(){
+  const fields=['nom','prenom','dateNaissance','tel1','tel2','telm','adresse1','cp','ville','compagnie','garantie','cotisation','nContrat','observation','rdvDate','rdvHeure','rdvAgent','statut'];
+  const headers=['NOM','PRENOM','DDN','TEL1','TEL2','TELM','ADRESSE','CP','VILLE','COMPAGNIE','GARANTIE','COTISATION','N CONTRAT','OBSERVATION','DATE RDV','HEURE RDV','AGENT','STATUT'];
   let csv=headers.join(';')+'\n';
-  for(const c of allContacts){
-    csv+=fields.map(f=>(fv(c[f])||'').replace(/;/g,',')).join(';')+'\n';
-  }
-  const a=document.createElement('a');
-  a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);
-  a.download='ProspectBL_export.csv';
-  a.click();
-  toast('Export tÃ©lÃ©chargÃ© ðŸ“¥');
+  for(const c of allContacts)csv+=fields.map(f=>(fv(c[f])||'').replace(/;/g,',')).join(';')+'\n';
+  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);a.download='ProspectBL_export.csv';a.click();toast('Export OK');
 };
 
-// ---- CODATA FALLBACK ----
-window.addEventListener('load',()=>{
-  if(!auth) loadData();
-});
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 </script>
-
-<!-- DonnÃ©es embarquÃ©es (fallback si Firebase vide) -->
-<script type="application/json" id="CODATA">
-[{"id":0,"nom":"A CASANOV","prenom":"LIJANE","tel1":"696481270","tel2":"","adresse1":"RESIDENCE ANSE MITAN RUE DE LA CANNELLE ATLANTIS tour ellane","cp":"97229 LES 3 ILETS","ville":"","compagnie":"GROUPAMA"}]
-</script>
-
 </body>
 </html>
