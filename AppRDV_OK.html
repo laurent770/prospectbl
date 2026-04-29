@@ -129,15 +129,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 #contact-list::-webkit-scrollbar-track{background:transparent}
 #contact-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
 
-.citem{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-bottom:1px solid var(--border);cursor:pointer;transition:all 0.12s;position:relative}
+.citem{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:1px solid var(--border);cursor:pointer;transition:all 0.12s;position:relative}
 .citem:hover{background:var(--surface2)}
 .citem.selected{background:var(--accent-light);border-left:3px solid var(--accent)}
 .citem.selected .cname{color:var(--accent)}
 .cavatar{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;color:#fff;margin-top:1px}
 .cinfo{flex:1;min-width:0}
-.cname{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
+.cname{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text);display:flex;align-items:center;gap:4px}
 .ctel{font-size:11px;color:var(--text2);font-family:'DM Mono',monospace;margin-top:1px}
-.cfamille{font-size:11px;color:var(--purple);font-weight:700;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:var(--purple-light);padding:2px 6px;border-radius:6px;display:inline-block}
+.cfamille{font-size:12px;color:#7048e8;font-weight:700;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:2px 0}
 .cstatus{flex-shrink:0}
 .badge{font-size:9px;font-weight:700;padding:3px 7px;border-radius:20px;text-transform:uppercase;letter-spacing:0.4px;white-space:nowrap}
 .badge-rdv{background:#e6fcf5;color:#0ca678}
@@ -656,7 +656,7 @@ function renderList(){
     const famNoms=hasFam?gids.filter(g=>g!==c.id).map(g=>{const m=allContacts.find(x=>x.id===g);return m?((m.prenom||'')+' '+(m.nom||'')).trim():''}).filter(Boolean).join(', '):'';
     const bmap={'signe':'Signe','rappel':'Rappel','nrp1':'NRP1','nrp2':'NRP2','nrp3':'NRP3+','ni':'Pas int.','rdv':'RDV'};
     const badge=c.statut&&bmap[c.statut]?`<span class="badge badge-${c.statut}">${bmap[c.statut]}</span>`:'';
-    div.innerHTML=`<div class="cavatar" style="background:${col}">${ini}</div><div class="cinfo"><div class="cname">${c.prenom||''} ${c.nom||''}${hasFam?` <span style="font-size:11px;color:#7048e8;font-weight:800;background:#f3f0ff;padding:1px 6px;border-radius:6px">Fam.${gids.length}</span>`:''}</div><div class="ctel">${tel}</div>${famNoms?`<div class="cfamille">${famNoms}</div>`:''}</div><div class="cstatus">${badge}</div>`;
+    div.innerHTML=`<div class="cavatar" style="background:${col}">${ini}</div><div class="cinfo"><div class="cname">${c.prenom||''} ${c.nom||''}${hasFam?` <span style="display:inline-block;font-size:12px;color:#fff;font-weight:800;background:linear-gradient(135deg,#7048e8,#ae3ec9);padding:2px 9px;border-radius:20px;margin-left:4px;letter-spacing:0.3px;box-shadow:0 2px 6px rgba(112,72,232,0.4)">Fam. ${gids.length}</span>`:''}</div><div class="ctel">${tel}</div>${famNoms?`<div class="cfamille">${famNoms}</div>`:''}</div><div class="cstatus">${badge}</div>`;
     div.onclick=()=>selectContact(c);list.appendChild(div);
   }
 }
