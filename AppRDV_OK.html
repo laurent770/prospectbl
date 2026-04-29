@@ -671,17 +671,7 @@ function updateStats(){
 // ZONES
 currentZone = 'all';
 
-function getZoneTime(zone) {
-  const now = new Date();
-  let offset;
-  if(zone === 'metro') offset = 2; // CEST (ete) ou 1 (hiver) - on prend 2 pour l'ete
-  else if(zone === 'guad') offset = -4; // UTC-4
-  else if(zone === 'reun') offset = 4; // UTC+4
-  else return null;
-  const utc = now.getTime() + now.getTimezoneOffset() * 60000;
-  const local = new Date(utc + offset * 3600000);
-  return local;
-}
+// getZoneTime defined in module below
 
 function isHoraireOk(zone) {
   if(zone === 'all') return true;
