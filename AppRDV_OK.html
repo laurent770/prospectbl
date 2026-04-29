@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ProspectBL</title>
+<title>ProspectBL</title><!-- v1777467050 -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -664,9 +664,9 @@ function updateStats(){
     return list.slice(0,12).map(c=>`<div class="stt-item"><span class="stt-name">${c.prenom||''} ${c.nom||''}</span><span class="stt-date">${c.rdvDate||''} ${c.rdvHeure||''}</span></div>`).join('')+(list.length>12?`<div style="color:#64748b;font-size:11px;margin-top:6px">+${list.length-12} autres</div>`:'');
   }
   document.getElementById('tooltip-all').innerHTML=tip(all);
-  document.getElementById('tooltip-br')';
-  return t.getHours().toString().padStart(2,'0') + 'h' + t.getMinutes().toString().padStart(2,'0');
-}
+  document.getElementById('tooltip-br').innerHTML=tip(br);
+  document.getElementById('tooltip-le').innerHTML=tip(le);
+
 
 function getZoneFromCP(cp) {
   if(!cp) return 'metro';
