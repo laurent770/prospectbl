@@ -159,7 +159,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);font
 .fmember-name{font-size:15px;font-weight:700;color:var(--text)}
 .fmember-details{font-size:13px;color:var(--text2);margin-top:4px;display:flex;gap:12px;flex-wrap:wrap}
 .fmember-detail{display:flex;gap:4px;align-items:center}
-.citem.is-famille::after{content:'ðŸ‘¨â€ðŸ‘©â€ðŸ‘§';font-size:11px;margin-left:4px}
+.citem.is-famille::after{content:'Famille';font-size:11px;margin-left:4px}
 
 /* TOAST */
 #toast{position:fixed;bottom:24px;right:24px;background:#1a2233;color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;font-weight:700;z-index:9999;opacity:0;transform:translateY(10px);transition:all 0.3s;pointer-events:none}
@@ -175,14 +175,14 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);font
     <div class="stat s-rdv"><span class="snum" id="st-rdv">0</span><span class="slabel">RDV</span></div>
     <div class="stat s-sign"><span class="snum" id="st-sign">0</span><span class="slabel">SignÃ©s</span></div>
     <div class="stat s-rappel"><span class="snum" id="st-rappel">0</span><span class="slabel">Rappels</span></div>
-    <div class="stat s-nrp"><span class="snum" id="st-nrp">0</span><span class="slabel">NRP</span></div>
-    <div class="stat s-ni"><span class="snum" id="st-ni">0</span><span class="slabel">Pas int.</span></div>
+    <div class="stat s-nrp"><span class="snum" id="st-nrp">0</span><span class="slabel">âœ• NRP</span></div>
+    <div class="stat s-ni"><span class="snum" id="st-ni">0</span><span class="slabel">â€” Pas int.</span></div>
   </div>
   <div id="topbtns">
-    <button class="tbtn tbtn-outline" id="btn-agenda-br" onclick="showAgenda('Bresler')">ðŸ“… RDV Bresler</button>
-    <button class="tbtn tbtn-outline" id="btn-agenda-le" onclick="showAgenda('Lefebvre')">ðŸ“… RDV Lefebvre</button>
-    <button class="tbtn tbtn-outline" id="btn-contacts" onclick="showContacts()" style="display:none">ðŸ‘¥ Contacts</button>
-    <button class="tbtn tbtn-outline" onclick="exportData()">ðŸ“¤ Export</button>
+    <button class="tbtn tbtn-outline" id="btn-agenda-br" onclick="showAgenda('Bresler')">RDV RDV Bresler</button>
+    <button class="tbtn tbtn-outline" id="btn-agenda-le" onclick="showAgenda('Lefebvre')">RDV RDV Lefebvre</button>
+    <button class="tbtn tbtn-outline" id="btn-contacts" onclick="showContacts()" style="display:none"> Contacts</button>
+    <button class="tbtn tbtn-outline" onclick="exportData()"> Export</button>
   </div>
 </div>
 
@@ -196,9 +196,9 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);font
       <button class="ftab" onclick="setFilter('sansrdv',this)">Sans RDV</button>
       <button class="ftab" onclick="setFilter('rdv',this)">RDV</button>
       <button class="ftab" onclick="setFilter('signe',this)">SignÃ©</button>
-      <button class="ftab" onclick="setFilter('rappel',this)">Rappel</button>
-      <button class="ftab" onclick="setFilter('nrp',this)">NRP</button>
-      <button class="ftab" onclick="setFilter('ni',this)">Pas int.</button>
+      <button class="ftab" onclick="setFilter('rappel',this)">â†º Rappel</button>
+      <button class="ftab" onclick="setFilter('nrp',this)">âœ• NRP</button>
+      <button class="ftab" onclick="setFilter('ni',this)">â€” Pas int.</button>
     </div>
     <div id="contact-count">Chargement...</div>
     <div id="contact-list"></div>
@@ -206,7 +206,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);font
 
   <div id="agenda">
     <div class="agenda-header">
-      <div class="agenda-title" id="agenda-title">ðŸ“… Agenda</div>
+      <div class="agenda-title" id="agenda-title">RDV Agenda</div>
       <button class="agent-filter-btn active-all" id="af-all" onclick="agentFilter('tous',this)">Tous</button>
       <button class="agent-filter-btn" id="af-br" onclick="agentFilter('Bresler',this)">BR Bresler</button>
       <button class="agent-filter-btn" id="af-le" onclick="agentFilter('Lefebvre',this)">LE Lefebvre</button>
@@ -228,16 +228,16 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);font
           <div class="detail-source" id="d-source"></div>
         </div>
         <div class="detail-actions">
-          <button class="abtn abtn-sign" id="btn-sign" onclick="setStatus('signe')">âœ… SignÃ©</button>
-          <button class="abtn abtn-rappel" id="btn-rappel" onclick="setStatus('rappel')">ðŸ” Rappel</button>
-          <button class="abtn abtn-nrp" id="btn-nrp" onclick="setStatus('nrp')">ðŸ“µ NRP</button>
-          <button class="abtn abtn-ni" id="btn-ni" onclick="setStatus('ni')">ðŸš« Pas int.</button>
+          <button class="abtn abtn-sign" id="btn-sign" onclick="setStatus('signe')">âœ“ SignÃ©</button>
+          <button class="abtn abtn-rappel" id="btn-rappel" onclick="setStatus('rappel')"> Rappel</button>
+          <button class="abtn abtn-nrp" id="btn-nrp" onclick="setStatus('nrp')"> NRP</button>
+          <button class="abtn abtn-ni" id="btn-ni" onclick="setStatus('ni')"> Pas int.</button>
         </div>
       </div>
 
       <!-- COORDONNÃ‰ES -->
       <div class="section-card">
-        <div class="section-title">ðŸ“ž CoordonnÃ©es</div>
+        <div class="section-title"> COORDONNÃ‰ES</div>
         <div class="fields-grid">
           <div class="field"><div class="field-label">TÃ©lÃ©phone 1</div><div class="field-value phone" id="d-tel1"></div></div>
           <div class="field"><div class="field-label">TÃ©lÃ©phone 2</div><div class="field-value phone" id="d-tel2"></div></div>
@@ -253,7 +253,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);font
 
       <!-- CONTRAT -->
       <div class="section-card">
-        <div class="section-title">ðŸ“‹ Contrat & Assurance</div>
+        <div class="section-title"> Contrat & Assurance</div>
         <div class="fields-grid">
           <div class="field"><div class="field-label">Compagnie</div><div class="field-value highlight" id="d-compagnie"></div></div>
           <div class="field"><div class="field-label">Garantie</div><div class="field-value" id="d-garantie"></div></div>
@@ -269,7 +269,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);font
 
       <!-- BANCAIRE -->
       <div class="section-card">
-        <div class="section-title">ðŸ¦ Informations Bancaires</div>
+        <div class="section-title"> INFORMATIONS BANCAIRES</div>
         <div class="fields-grid">
           <div class="field"><div class="field-label">IBAN</div><div class="field-value" id="d-iban"></div></div>
           <div class="field"><div class="field-label">BIC</div><div class="field-value" id="d-bic"></div></div>
@@ -279,7 +279,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);font
 
       <!-- COMMERCIAL -->
       <div class="section-card">
-        <div class="section-title">ðŸ‘¤ Infos Commerciales</div>
+        <div class="section-title"> INFOS COMMERCIALES</div>
         <div class="fields-grid">
           <div class="field"><div class="field-label">Conseiller</div><div class="field-value" id="d-conseiller"></div></div>
           <div class="field"><div class="field-label">Agent</div><div class="field-value" id="d-agent"></div></div>
@@ -297,19 +297,19 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);font
 
       <!-- FAMILLE -->
       <div class="famille-card" id="famille-card" style="display:none">
-        <div class="famille-title">ðŸ‘¨â€ðŸ‘©â€ðŸ‘§ MÃªme famille â€” mÃªme numÃ©ro de tÃ©lÃ©phone</div>
+        <div class="famille-title">Famille MÃŠME FAMILLE â€” MÃŠME NUMÃ‰RO</div>
         <div class="famille-members" id="famille-members"></div>
       </div>
 
       <!-- OBSERVATION -->
       <div class="section-card">
-        <div class="section-title">ðŸ“ Observation</div>
+        <div class="section-title"> OBSERVATION</div>
         <div class="field-value" id="d-observation" style="font-size:16px;line-height:1.6"></div>
       </div>
 
       <!-- RDV -->
       <div class="rdv-card">
-        <div class="section-title">ðŸ“… Planifier un RDV</div>
+        <div class="section-title">RDV PLANIFIER UN RDV</div>
         <div class="rdv-row" style="margin-bottom:12px">
           <div class="rdv-field">
             <label>Agent</label>
@@ -493,12 +493,12 @@ function renderAgenda() {
     return da.localeCompare(db);
   });
 
-  const title = currentAgentFilter==='tous' ? 'ðŸ“… Tous les RDV' :
-    currentAgentFilter==='Bresler' ? 'ðŸ“… RDV de Bresler' : 'ðŸ“… RDV de Lefebvre';
+  const title = currentAgentFilter==='tous' ? 'RDV Tous les RDV' :
+    currentAgentFilter==='Bresler' ? 'RDV RDV de Bresler' : 'RDV RDV de Lefebvre';
   document.getElementById('agenda-title').textContent = title + ' (' + rdvContacts.length + ')';
 
   if(rdvContacts.length === 0) {
-    document.getElementById('agenda-list').innerHTML = '<div class="no-rdv">ðŸ“­ Aucun RDV trouvÃ©</div>';
+    document.getElementById('agenda-list').innerHTML = '<div class="no-rdv"> Aucun RDV trouvÃ©</div>';
     return;
   }
 
@@ -516,9 +516,9 @@ function renderAgenda() {
     const isToday = date === today;
     const isPast = date < today;
     let dateLabel = date;
-    if(isToday) dateLabel = 'ðŸŸ¢ AUJOURD\'HUI â€” ' + date;
-    else if(isPast) dateLabel = 'â° ' + date + ' (passÃ©)';
-    else dateLabel = 'ðŸ“† ' + date;
+    if(isToday) dateLabel = '> AUJOURD\'HUI â€” ' + date;
+    else if(isPast) dateLabel = 'âŒ› ' + date + ' (passÃ©)';
+    else dateLabel = 'â–º ' + date;
 
     html += `<div class="rdv-day">
       <div class="rdv-day-title${isToday?' today':''}">${dateLabel}</div>`;
@@ -530,8 +530,8 @@ function renderAgenda() {
         <div class="rdv-time">${c.rdvHeure||'â€”'}</div>
         <div class="rdv-info">
           <div class="rdv-name">${c.prenom||''} ${c.nom||''}</div>
-          <div class="rdv-tel">ðŸ“ž ${tel}</div>
-          ${c.rdvNotes ? `<div class="rdv-notes-text">ðŸ’¬ ${c.rdvNotes}</div>` : ''}
+          <div class="rdv-tel"> ${tel}</div>
+          ${c.rdvNotes ? `<div class="rdv-notes-text"> ${c.rdvNotes}</div>` : ''}
         </div>
         ${c.rdvAgent ? `<span class="rdv-agent-badge ${agentClass}">${c.rdvAgent}</span>` : ''}
       </div>`;
@@ -645,9 +645,9 @@ function renderList(){
     div.innerHTML = `
       <div class="cavatar" style="background:${col}">${ini}</div>
       <div class="cinfo">
-        <div class="cname">${c.prenom||''} ${c.nom||''}${hasFamille ? ' <span style="font-size:11px;color:#2563eb">ðŸ‘¨â€ðŸ‘©â€ðŸ‘§ '+groupIds.length+'</span>' : ''}</div>
+        <div class="cname">${c.prenom||''} ${c.nom||''}${hasFamille ? ' <span style="font-size:11px;color:#2563eb">Famille '+groupIds.length+'</span>' : ''}</div>
         <div class="ctel">${tel}</div>
-        ${familleNoms ? `<div style="font-size:11px;color:#7c3aed;font-weight:600;margin-top:2px">ðŸ‘¥ ${familleNoms}</div>` : ''}
+        ${familleNoms ? `<div style="font-size:11px;color:#7c3aed;font-weight:600;margin-top:2px"> ${familleNoms}</div>` : ''}
       </div>
       <div class="cstatus">${badge}</div>`;
     div.onclick = ()=>selectContact(c);
@@ -725,15 +725,15 @@ function selectContact(c){
     familleMembers.innerHTML = autresMembres.map(m => {
       const tel = fv(m.tel1)||fv(m.tel2)||fv(m.telm)||'â€”';
       const details = [
-        m.dateNaissance ? `ðŸ“… ${m.dateNaissance}` : '',
+        m.dateNaissance ? `RDV ${m.dateNaissance}` : '',
         m.compagnie ? `ðŸ¢ ${m.compagnie}` : '',
-        m.adresse1 ? `ðŸ“ ${m.adresse1}` : '',
+        m.adresse1 ? ` ${m.adresse1}` : '',
         m.cp ? m.cp : '',
         m.ville ? m.ville : '',
-        m.garantie ? `ðŸ›¡ï¸ ${m.garantie}` : '',
-        m.cotisation ? `ðŸ’° ${m.cotisation}` : '',
-        m.nContrat ? `ðŸ“„ NÂ° ${m.nContrat}` : '',
-        m.observation ? `ðŸ’¬ ${m.observation}` : '',
+        m.garantie ? ` ${m.garantie}` : '',
+        m.cotisation ? ` ${m.cotisation}` : '',
+        m.nContrat ? ` NÂ° ${m.nContrat}` : '',
+        m.observation ? ` ${m.observation}` : '',
       ].filter(Boolean);
       return `<div class="fmember" onclick="selectContact(allContacts.find(x=>x.id===${m.id}))">
         <div class="fmember-name">${m.prenom||''} ${m.nom||''} â€” <span style="color:var(--accent)">${tel}</span></div>
@@ -761,7 +761,7 @@ window.setStatus=(s)=>{
   selectContact(c);
   updateStats();
   renderList();
-  toast('Statut mis Ã  jour âœ…');
+  toast('Statut mis Ã  jour ');
 };
 
 window.saveRDV=()=>{
@@ -776,7 +776,7 @@ window.saveRDV=()=>{
   updateStats();
   renderList();
   if(document.getElementById('agenda').style.display !== 'none') renderAgenda();
-  toast('RDV enregistrÃ© ðŸ“…');
+  toast('RDV enregistrÃ© RDV');
 };
 
 function saveToFirebase(c){
