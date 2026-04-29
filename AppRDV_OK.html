@@ -518,7 +518,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 
       <!-- FAMILLE -->
       <div class="famille-section" id="famille-card" style="display:none">
-        <div class="famille-header">Meme famille â€” meme numero <span class="fam-badge" id="fam-count"></span></div>
+        <div class="famille-header">Meme famille - meme numero <span class="fam-badge" id="fam-count"></span></div>
         <div class="fmembers" id="famille-members"></div>
       </div>
 
@@ -668,8 +668,8 @@ function selectContact(c){
   const tel=fv(c.tel1)||fv(c.tel2)||fv(c.telm);
   setKI('ki-tel',tel,'phone');setKI('ki-compagnie',c.compagnie,'');setKI('ki-ddn',c.dateNaissance,'');
 
-  function setKI(id,v,cls){const el=document.getElementById(id);if(!el)return;const val=fv(v);el.textContent=val||'â€”';el.className='ki-value'+(val?'':' empty')+(cls?' '+cls:'');}
-  function sv(id,v,cls=''){const el=document.getElementById(id);if(!el)return;const val=fv(v);el.textContent=val||'â€”';el.className='field-value'+(val?'':' empty')+(cls?' '+cls:'');}
+  function setKI(id,v,cls){const el=document.getElementById(id);if(!el)return;const val=fv(v);el.textContent=val||'-';el.className='ki-value'+(val?'':' empty')+(cls?' '+cls:'');}
+  function sv(id,v,cls=''){const el=document.getElementById(id);if(!el)return;const val=fv(v);el.textContent=val||'-';el.className='field-value'+(val?'':' empty')+(cls?' '+cls:'');}
 
   sv('d-tel1',c.tel1,'phone');sv('d-tel2',c.tel2,'phone');sv('d-telm',c.telm,'phone');
   sv('d-adr1',c.adresse1);sv('d-adr2',c.adresse2);sv('d-cp',c.cp);sv('d-ville',c.ville);sv('d-cpville',c.cpVille);sv('d-ddn',c.dateNaissance);
@@ -698,7 +698,7 @@ function selectContact(c){
   if(autres.length>0){
     fc.style.display='block';
     document.getElementById('fam-count').textContent=autres.length+' autre'+(autres.length>1?'s':'');
-    document.getElementById('famille-members').innerHTML=autres.map(m=>{const mt=fv(m.tel1)||fv(m.tel2)||'â€”';const mc=colorFor(m.nom);const details=[m.compagnie,m.garantie,m.dateNaissance].filter(Boolean).join(' Â· ');return`<div class="fmember" onclick="selectContactById(${m.id})"><div class="fm-avatar" style="background:${mc}">${initials(m.nom,m.prenom)}</div><div class="fm-info"><div class="fm-name">${m.prenom||''} ${m.nom||''}</div><div class="fm-tel">${mt}</div>${details?`<div class="fm-details">${details}</div>`:''}</div></div>`;}).join('');
+    document.getElementById('famille-members').innerHTML=autres.map(m=>{const mt=fv(m.tel1)||fv(m.tel2)||'-';const mc=colorFor(m.nom);const details=[m.compagnie,m.garantie,m.dateNaissance].filter(Boolean).join('  -  ');return`<div class="fmember" onclick="selectContactById(${m.id})"><div class="fm-avatar" style="background:${mc}">${initials(m.nom,m.prenom)}</div><div class="fm-info"><div class="fm-name">${m.prenom||''} ${m.nom||''}</div><div class="fm-tel">${mt}</div>${details?`<div class="fm-details">${details}</div>`:''}</div></div>`;}).join('');
   }else{fc.style.display='none';}
 
   document.getElementById('right').scrollTop=0;
@@ -733,12 +733,12 @@ function renderAgenda(){
   let html='';
   Object.keys(groups).sort().forEach(date=>{
     const isToday=date===today,isPast=date<today;
-    const lbl2=isPast?'Passe â€” '+date:isToday?'Aujourd\'hui â€” '+date:'A venir â€” '+date;
+    const lbl2=isPast?'Passe - '+date:isToday?'Aujourd\'hui - '+date:'A venir - '+date;
     const cls=isToday?'today':isPast?'past':'';
     html+=`<div class="rdv-day"><div class="rdv-day-title ${cls}">${lbl2}</div>`;
     groups[date].forEach(c=>{
       const ac=c.rdvAgent==='Bresler'?'br':c.rdvAgent==='Lefebvre'?'le':'';
-      const tel=fv(c.tel1)||fv(c.tel2)||'â€”';
+      const tel=fv(c.tel1)||fv(c.tel2)||'-';
       html+=`<div class="rdv-item agent-${ac}" onclick="openFromAgenda(${c.id})">
         <div class="rdv-time-block"><div class="rdv-time">${(c.rdvHeure||'--:--').slice(0,5)}</div></div>
         <div class="rdv-info"><div class="rdv-name">${c.prenom||''} ${c.nom||''}</div><div class="rdv-tel">${tel}</div>${c.rdvNotes?`<div class="rdv-note">${c.rdvNotes}</div>`:''}</div>
