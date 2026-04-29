@@ -9,6 +9,27 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Inter',sans-serif;background:#f0f4ff;color:#111827;font-size:14px;min-height:100vh;-webkit-font-smoothing:antialiased}
 
+
+/* ZONE FILTER */
+#zone-bar{display:flex;gap:8px;padding:10px 14px;background:linear-gradient(135deg,#1e1b4b,#312e81);border-bottom:2px solid #4338ca;align-items:center;flex-wrap:wrap}
+.zone-clock{display:flex;flex-direction:column;align-items:center;margin-left:auto}
+.zone-clock-time{font-size:22px;font-weight:900;color:#fff;font-family:'Inter',monospace;letter-spacing:2px}
+.zone-clock-label{font-size:9px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;margin-top:1px}
+.zone-btn{border:2px solid rgba(255,255,255,0.2);border-radius:12px;padding:8px 16px;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit;transition:all 0.2s;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.06);color:#fff}
+.zone-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.3)}
+.zone-btn.active{box-shadow:0 4px 16px rgba(0,0,0,0.4);transform:translateY(-1px)}
+.zone-btn-metro{}.zone-btn-metro.active{background:linear-gradient(135deg,#2563eb,#4f46e5);border-color:#818cf8}
+.zone-btn-guad.active{background:linear-gradient(135deg,#059669,#10b981);border-color:#6ee7b7}
+.zone-btn-mart.active{background:linear-gradient(135deg,#7c3aed,#a855f7);border-color:#d8b4fe}
+.zone-btn-reun.active{background:linear-gradient(135deg,#dc2626,#ef4444);border-color:#fca5a5}
+.zone-flag{font-size:20px}
+.zone-info{display:flex;flex-direction:column}
+.zone-name{font-size:13px;font-weight:800;line-height:1}
+.zone-time{font-size:11px;color:rgba(255,255,255,0.6);font-family:'Inter',monospace;margin-top:2px}
+.zone-status{font-size:9px;font-weight:800;padding:2px 7px;border-radius:20px;margin-top:3px;text-transform:uppercase;letter-spacing:0.5px;width:fit-content}
+.zone-open{background:#16a34a;color:#fff}
+.zone-closed{background:rgba(255,255,255,0.15);color:rgba(255,255,255,0.5)}
+
 /* LOGIN */
 #login-screen{position:fixed;inset:0;background:linear-gradient(145deg,#0f172a,#1e1b4b,#0f172a);display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:20px}
 .login-title{color:#fff;font-size:36px;font-weight:900;letter-spacing:-1px}
@@ -88,12 +109,25 @@ body{font-family:'Inter',sans-serif;background:#f0f4ff;color:#111827;font-size:1
 .ftab{border:none;border-radius:8px;padding:5px 11px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;background:transparent;color:#64748b;transition:all 0.15s}
 .ftab:hover{background:#e0e7ff;color:#4338ca}
 .ftab.active{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;box-shadow:0 3px 8px rgba(79,70,229,0.3)}
+.zbtn{display:flex;align-items:center;gap:6px;border:2px solid #e0e7ff;border-radius:10px;padding:6px 10px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;background:#fff;color:#64748b;transition:all 0.2s;flex-direction:row}
+.zbtn:hover{border-color:#4f46e5;color:#4f46e5;transform:translateY(-1px)}
+.zbtn.active{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;border-color:transparent;box-shadow:0 4px 12px rgba(79,70,229,0.35)}
+.zbtn.active .zbtn-time{color:rgba(255,255,255,0.8)}
+.zbtn.horaire-ok{border-color:#10b981;background:#ecfdf5;color:#065f46}
+.zbtn.horaire-ok.active{background:linear-gradient(135deg,#10b981,#059669);border-color:transparent}
+.zbtn.horaire-ko{border-color:#f97316;background:#fff7ed;color:#9a3412}
+.zbtn-label{font-size:11px;font-weight:800;display:block}
+.zbtn-time{font-size:13px;font-weight:900;display:block;font-family:'Inter',monospace}
+.zone-banner{display:none;padding:8px 14px;font-size:12px;font-weight:700;text-align:center;border-bottom:2px solid}
+.zone-banner.ok{background:#ecfdf5;color:#065f46;border-color:#6ee7b7}
+.zone-banner.ko{background:#fff7ed;color:#9a3412;border-color:#fb923c}
+#contact-count{padding:8px 14px;font-size:11px;color:#4f46e5;font-weight:800;background:#eef2ff;border-bottom:1.5px solid #e0e7ff;letter-spacing:0.3px}
 #contact-count{padding:8px 14px;font-size:11px;color:#4f46e5;font-weight:800;background:#eef2ff;border-bottom:1.5px solid #e0e7ff;letter-spacing:0.3px}
 #contact-list{overflow-y:auto;flex:1}
 #contact-list::-webkit-scrollbar{width:4px}
 #contact-list::-webkit-scrollbar-thumb{background:#c7d2fe;border-radius:4px}
 
-.citem{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:1px solid #f1f5f9;cursor:pointer;transition:all 0.12s}
+.citem{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:1px solid #f1f5f9;cursor:pointer;transition:all 0.12s;min-height:60px}
 .citem:hover{background:#f5f3ff}
 .citem.selected{background:linear-gradient(135deg,#eef2ff,#ede9fe);border-left:4px solid #4f46e5}
 .cavatar{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0;color:#fff;margin-top:1px}
@@ -101,7 +135,7 @@ body{font-family:'Inter',sans-serif;background:#f0f4ff;color:#111827;font-size:1
 .cname{font-size:14px;font-weight:800;color:#111827;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .fam-pill{display:inline-flex;align-items:center;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;font-size:11px;font-weight:800;padding:2px 10px;border-radius:20px;box-shadow:0 2px 8px rgba(124,58,237,0.4);white-space:nowrap}
 .ctel{font-size:13px;color:#4f46e5;font-weight:700;margin-top:3px}
-.cfamille{font-size:11px;color:#7c3aed;font-weight:600;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cfamille{font-size:12px;color:#7c3aed;font-weight:700;margin-top:4px;line-height:1.5;border-top:1px solid #ede9fe;padding-top:4px}
 .cstatus{flex-shrink:0;padding-top:2px}
 .badge{font-size:10px;font-weight:800;padding:4px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,0.15)}
 .badge-rdv{background:linear-gradient(135deg,#10b981,#059669);color:#fff}
@@ -311,10 +345,76 @@ body{font-family:'Inter',sans-serif;background:#f0f4ff;color:#111827;font-size:1
   </div>
 </div>
 
+  <div id="zone-bar" style="display:none">
+    <button class="zone-btn zone-btn-metro active" id="zone-metro" onclick="setZone('metro',this)">
+      <span class="zone-flag"></span>
+      <div class="zone-info">
+        <span class="zone-name">Metropole</span>
+        <span class="zone-time" id="zt-metro">--:--</span>
+        <span class="zone-status" id="zs-metro">--</span>
+      </div>
+    </button>
+    <button class="zone-btn zone-btn-guad" id="zone-guad" onclick="setZone('guad',this)">
+      <span class="zone-flag"></span>
+      <div class="zone-info">
+        <span class="zone-name">Guadeloupe</span>
+        <span class="zone-time" id="zt-guad">--:--</span>
+        <span class="zone-status" id="zs-guad">--</span>
+      </div>
+    </button>
+    <button class="zone-btn zone-btn-mart" id="zone-mart" onclick="setZone('mart',this)">
+      <span class="zone-flag"></span>
+      <div class="zone-info">
+        <span class="zone-name">Martinique</span>
+        <span class="zone-time" id="zt-mart">--:--</span>
+        <span class="zone-status" id="zs-mart">--</span>
+      </div>
+    </button>
+    <button class="zone-btn zone-btn-reun" id="zone-reun" onclick="setZone('reun',this)">
+      <span class="zone-flag"></span>
+      <div class="zone-info">
+        <span class="zone-name">La Reunion</span>
+        <span class="zone-time" id="zt-reun">--:--</span>
+        <span class="zone-status" id="zs-reun">--</span>
+      </div>
+    </button>
+    <div class="zone-clock">
+      <div class="zone-clock-time" id="zone-main-clock">--:--:--</div>
+      <div class="zone-clock-label" id="zone-main-label">Heure locale</div>
+    </div>
+  </div>
+
 <div id="app">
   <div id="left">
     <div id="search-wrap"><input type="text" id="search" placeholder="Rechercher un contact..." oninput="filterContacts()"></div>
-    <div id="filter-tabs">
+    <div id="zone-bar" style="display:flex;gap:6px;padding:10px 12px;border-bottom:2px solid #e0e7ff;background:#f0f4ff;align-items:center">
+  <button class="zbtn active" id="zbtn-all" onclick="setZone('all',this)">
+    <span style="font-size:16px">[Monde]</span>
+    <span class="zbtn-label">Toutes zones</span>
+  </button>
+  <button class="zbtn" id="zbtn-metro" onclick="setZone('metro',this)">
+    <span style="font-size:16px">FR</span>
+    <div>
+      <span class="zbtn-label">Metropole</span>
+      <span class="zbtn-time" id="time-metro"></span>
+    </div>
+  </button>
+  <button class="zbtn" id="zbtn-guad" onclick="setZone('guad',this)">
+    <span style="font-size:16px">GP</span>
+    <div>
+      <span class="zbtn-label">Guadeloupe</span>
+      <span class="zbtn-time" id="time-guad"></span>
+    </div>
+  </button>
+  <button class="zbtn" id="zbtn-reun" onclick="setZone('reun',this)">
+    <span style="font-size:16px">RE</span>
+    <div>
+      <span class="zbtn-label">Reunion</span>
+      <span class="zbtn-time" id="time-reun"></span>
+    </div>
+  </button>
+</div>
+<div id="filter-tabs">
       <button class="ftab active" onclick="setFilter('tous',this)">Tous</button>
       <button class="ftab" onclick="setFilter('sansrdv',this)">Sans RDV</button>
       <button class="ftab" onclick="setFilter('rdv',this)">RDV</button>
@@ -323,7 +423,8 @@ body{font-family:'Inter',sans-serif;background:#f0f4ff;color:#111827;font-size:1
       <button class="ftab" onclick="setFilter('nrp',this)">NRP</button>
       <button class="ftab" onclick="setFilter('ni',this)">Pas int.</button>
     </div>
-    <div id="contact-count">Chargement...</div>
+    <div id="zone-banner" class="zone-banner"></div>
+<div id="contact-count">Chargement...</div>
     <div id="contact-list"></div>
   </div>
 
@@ -452,6 +553,26 @@ body{font-family:'Inter',sans-serif;background:#f0f4ff;color:#111827;font-size:1
 </div>
 <div id="toast"></div>
 
+<script>
+// Wrappers globaux pour les boutons HTML
+function selectUser(u){if(window._selectUser)window._selectUser(u);else setTimeout(()=>selectUser(u),100);}
+function pinPress(d){if(window._pinPress)window._pinPress(d);else setTimeout(()=>pinPress(d),100);}
+function pinClear(){if(window._pinClear)window._pinClear();else setTimeout(pinClear,100);}
+function pinValidate(){if(window._pinValidate)window._pinValidate();else setTimeout(pinValidate,100);}
+function backToUsers(){if(window._backToUsers)window._backToUsers();else setTimeout(backToUsers,100);}
+function doLogout(){if(window._doLogout)window._doLogout();else setTimeout(doLogout,100);}
+function setFilter(f,el){if(window._setFilter)window._setFilter(f,el);else setTimeout(()=>setFilter(f,el),100);}
+function filterContacts(){if(window._filterContacts)window._filterContacts();else setTimeout(filterContacts,100);}
+function showAgenda(){if(window._showAgenda)window._showAgenda();else setTimeout(showAgenda,100);}
+function showContacts(){if(window._showContacts)window._showContacts();else setTimeout(showContacts,100);}
+function agentFilter(a,el){if(window._agentFilter)window._agentFilter(a,el);else setTimeout(()=>agentFilter(a,el),100);}
+function setStatus(s){if(window._setStatus)window._setStatus(s);else setTimeout(()=>setStatus(s),100);}
+function selectAgent(a,el,c){if(window._selectAgent)window._selectAgent(a,el,c);else setTimeout(()=>selectAgent(a,el,c),100);}
+function saveRDV(){if(window._saveRDV)window._saveRDV();else setTimeout(saveRDV,100);}
+function exportData(){if(window._exportData)window._exportData();else setTimeout(exportData,100);}
+function selectContactById(id){if(window._selectContactById)window._selectContactById(id);else setTimeout(()=>selectContactById(id),100);}
+function openFromAgenda(id){if(window._openFromAgenda)window._openFromAgenda(id);else setTimeout(()=>openFromAgenda(id),100);}
+</script>
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import{getDatabase,ref,onValue,update}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
@@ -469,20 +590,21 @@ function initials(a,b){return((b||'')[0]||'').toUpperCase()+((a||'')[0]||'').toU
 function fv(v){if(v===null||v===undefined)return '';const s=String(v).trim();return(s===''||s==='null'||s==='undefined'||s==='NaT')?'':s;}
 function formatDate(v){if(!v)return '';const s=fv(v);if(!s)return '';const m=s.match(/^(\d{4})-(\d{2})-(\d{2})/);if(m)return m[3]+'/'+m[2]+'/'+m[1];return s;}
 
-window.selectUser=function(u){currentUser=u;document.getElementById('login-step1').style.display='none';document.getElementById('login-step2').style.display='block';document.getElementById('lb-title').textContent=LABELS[u];pinValue='';upd();};
-window.backToUsers=function(){document.getElementById('login-step1').style.display='flex';document.getElementById('login-step2').style.display='none';pinValue='';document.getElementById('pin-error').textContent='';};
-window.pinPress=function(d){if(pinValue.length>=6)return;pinValue+=d;upd();if(pinValue.length===6)setTimeout(pinValidate,200);};
-window.pinClear=function(){pinValue=pinValue.slice(0,-1);upd();};
+window._selectUser=window.selectUser=function(u){currentUser=u;document.getElementById('login-step1').style.display='none';document.getElementById('login-step2').style.display='block';document.getElementById('lb-title').textContent=LABELS[u];pinValue='';upd();};
+window._backToUsers=window.backToUsers=function(){document.getElementById('login-step1').style.display='flex';document.getElementById('login-step2').style.display='none';pinValue='';document.getElementById('pin-error').textContent='';};
+window._pinPress=window.pinPress=function(d){if(pinValue.length>=6)return;pinValue+=d;upd();if(pinValue.length===6)setTimeout(pinValidate,200);};
+window._pinClear=window.pinClear=function(){pinValue=pinValue.slice(0,-1);upd();};
 function upd(){for(let i=0;i<6;i++)document.getElementById('pd'+i).className='pin-dot'+(i<pinValue.length?' filled':'');}
-window.pinValidate=function(){
+window._pinValidate=window.pinValidate=function(){
   if(pinValue===PINS[currentUser]){
     document.getElementById('login-screen').style.display='none';
     document.getElementById('topbar').style.display='flex';
     document.getElementById('app').style.display='flex';
+    document.getElementById('zone-bar').style.display='flex';
     setupUser();loadData();
   }else{document.getElementById('pin-error').textContent='Code incorrect, reessayez.';pinValue='';upd();}
 };
-window.doLogout=function(){location.reload();};
+window._doLogout=window.doLogout=function(){location.reload();};
 
 function setupUser(){
   const b=document.getElementById('user-badge');
@@ -516,17 +638,19 @@ function loadData(){
   onValue(ref(db,'contacts'),snap=>{
     const data=snap.val();if(!data)return;
     allContacts=Array.isArray(data)?data:Object.values(data);
+    // Convertir ancien format 'nrp' en 'nrp1'
+    allContacts.forEach(c=>{if(c.statut==='nrp')c.statut='nrp1';});
     buildGroups(allContacts);render();startChecker();
   });
 }
-function render(){updateStats();filterContacts();}
+function render(){updateStats();filterContacts();updateZoneTimes();}
 
 function updateStats(){
   const br=allContacts.filter(c=>c.statut==='rdv'&&c.rdvAgent==='Bresler');
   const le=allContacts.filter(c=>c.statut==='rdv'&&c.rdvAgent==='Lefebvre');
   const all=allContacts.filter(c=>c.statut==='rdv');
   let sign=0,rappel=0,nrp=0,ni=0;
-  allContacts.forEach(c=>{if(c.statut==='signe')sign++;else if(c.statut==='rappel')rappel++;else if(['nrp1','nrp2','nrp3'].includes(c.statut))nrp++;else if(c.statut==='ni')ni++;});
+  allContacts.forEach(c=>{if(c.statut==='signe')sign++;else if(c.statut==='rappel')rappel++;else if(['nrp','nrp1','nrp2','nrp3'].includes(c.statut))nrp++;else if(c.statut==='ni')ni++;});
   document.getElementById('st-total').textContent=allContacts.length;
   document.getElementById('st-rdv').textContent=all.length;
   document.getElementById('st-rdv-br').textContent=br.length;
@@ -544,12 +668,107 @@ function updateStats(){
   document.getElementById('tooltip-le').innerHTML=tip(le);
 }
 
-window.setFilter=function(f,el){currentFilter=f;document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('active'));el.classList.add('active');filterContacts();};
-window.filterContacts=function(){
+// ZONES
+let currentZone = 'all';
+
+function getZoneTime(zone) {
+  const now = new Date();
+  let offset;
+  if(zone === 'metro') offset = 2; // CEST (ete) ou 1 (hiver) - on prend 2 pour l'ete
+  else if(zone === 'guad') offset = -4; // UTC-4
+  else if(zone === 'reun') offset = 4; // UTC+4
+  else return null;
+  const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+  const local = new Date(utc + offset * 3600000);
+  return local;
+}
+
+function isHoraireOk(zone) {
+  if(zone === 'all') return true;
+  const t = getZoneTime(zone);
+  if(!t) return true;
+  const h = t.getHours();
+  return h >= 9 && h < 19;
+}
+
+function formatZoneTime(zone) {
+  const t = getZoneTime(zone);
+  if(!t) return '';
+  return t.getHours().toString().padStart(2,'0') + 'h' + t.getMinutes().toString().padStart(2,'0');
+}
+
+function getZoneFromCP(cp) {
+  if(!cp) return 'metro';
+  const s = String(cp).trim().replace(/\s/g,'');
+  if(s.startsWith('971') || s.startsWith('97100') || s.startsWith('97200') || s.startsWith('97300') || s === '971' || s === '972' || s === '973') return 'guad';
+  if(s.startsWith('972')) return 'guad'; // Martinique proche
+  if(s.startsWith('974')) return 'reun';
+  if(s.startsWith('97')) return 'guad'; // autres DOM
+  return 'metro';
+}
+
+function updateZoneTimes() {
+  ['metro','guad','reun'].forEach(z => {
+    const el = document.getElementById('time-'+z);
+    if(el) el.textContent = formatZoneTime(z);
+    const btn = document.getElementById('zbtn-'+z);
+    if(btn) {
+      const ok = isHoraireOk(z);
+      btn.classList.remove('horaire-ok','horaire-ko');
+      if(!btn.classList.contains('active')) {
+        btn.classList.add(ok ? 'horaire-ok' : 'horaire-ko');
+      }
+    }
+  });
+}
+
+window._setZone=window.setZone=function(zone, el) {
+  currentZone = zone;
+  document.querySelectorAll('.zbtn').forEach(b => {
+    b.classList.remove('active','horaire-ok','horaire-ko');
+  });
+  el.classList.add('active');
+  updateZoneTimes();
+
+  // Banner
+  const banner = document.getElementById('zone-banner');
+  if(zone === 'all') {
+    banner.style.display = 'none';
+  } else {
+    const ok = isHoraireOk(zone);
+    const names = {metro:'Metropole',guad:'Guadeloupe',reun:'La Reunion'};
+    const time = formatZoneTime(zone);
+    banner.style.display = 'block';
+    banner.className = 'zone-banner ' + (ok ? 'ok' : 'ko');
+    banner.textContent = ok
+      ? names[zone] + ' - ' + time + ' - Horaires favorables (9h-19h)'
+      : names[zone] + ' - ' + time + ' - Hors horaires';
+  }
+  filterContacts();
+};
+
+// Update times every minute
+setInterval(() => { updateZoneTimes(); }, 60000);
+
+window._setFilter=window.setFilter=function(f,el){currentFilter=f;document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('active'));el.classList.add('active');filterContacts();};
+window._filterContacts=window.filterContacts=function(){
   const q=(document.getElementById('search').value||'').toLowerCase().trim();
   filtered=allContacts.filter(c=>{
+    // Zone filter
+    if(currentZone !== 'metro') {
+      if(getContactZone(c) !== currentZone) return false;
+    } else {
+      // Metro = exclude DOM-TOM
+      const cz = getContactZone(c);
+      if(cz !== 'metro') return false;
+    }
     if(!representativeIds.has(c.id))return false;
-    const ok=currentFilter==='tous'||(currentFilter==='sansrdv'&&!c.statut)||(currentFilter==='nrp'&&['nrp1','nrp2','nrp3'].includes(c.statut))||c.statut===currentFilter;
+    // Zone filter
+    if(currentZone !== 'all') {
+      const cz = getZoneFromCP(c.cp||c.cpVille||'');
+      if(cz !== currentZone) return false;
+    }
+    const ok=currentFilter==='tous'||(currentFilter==='sansrdv'&&!c.statut)||(currentFilter==='nrp'&&['nrp','nrp1','nrp2','nrp3'].includes(c.statut))||c.statut===currentFilter;
     if(!ok)return false;
     if(!q)return true;
     const gids=contactToGroup[c.id]||[c.id];
@@ -567,7 +786,7 @@ function renderList(){
     const tel=fv(c.tel1)||fv(c.tel2)||fv(c.telm)||'Pas de tel';
     const gids=contactToGroup[c.id]||[c.id],hasFam=gids.length>1;
     const famNoms=hasFam?gids.filter(g=>g!==c.id).map(g=>{const m=allContacts.find(x=>x.id===g);return m?((m.prenom||'')+' '+(m.nom||'')).trim():''}).filter(Boolean).join(', '):'';
-    const bmap={'signe':'Signe','rappel':'Rappel','nrp1':'NRP1','nrp2':'NRP2','nrp3':'NRP3+','ni':'Pas int.','rdv':'RDV'};
+    const bmap={'signe':'Signe','rappel':'Rappel','nrp':'NRP','nrp1':'NRP1','nrp2':'NRP2','nrp3':'NRP3+','ni':'Pas int.','rdv':'RDV'};
     const badge=c.statut&&bmap[c.statut]?`<span class="badge badge-${c.statut}">${bmap[c.statut]}</span>`:'';
     const famPill=hasFam?`<span class="fam-pill">Fam. ${gids.length}</span>`:'';
     div.innerHTML=`<div class="cavatar" style="background:${col}">${ini}</div><div class="cinfo"><div class="cname">${c.prenom||''} ${c.nom||''} ${famPill}</div><div class="ctel">${tel}</div>${famNoms?`<div class="cfamille">${famNoms}</div>`:''}</div><div class="cstatus">${badge}</div>`;
@@ -645,18 +864,18 @@ function selectContact(c){
   document.getElementById('right').scrollTop=0;
 }
 
-window.selectContactById=function(id){const c=allContacts.find(x=>x.id===id);if(c)selectContact(c);};
-window.selectAgent=function(a,el,cls){
+window._selectContactById=window.selectContactById=function(id){const c=allContacts.find(x=>x.id===id);if(c)selectContact(c);};
+window._selectAgent=window.selectAgent=function(a,el,cls){
   selectedAgent=a;
   document.getElementById('agent-br').className='ra-btn'+(a==='Bresler'?' selected-br':'');
   document.getElementById('agent-le').className='ra-btn'+(a==='Lefebvre'?' selected-le':'');
 };
-window.setStatus=function(s){
+window._setStatus=window.setStatus=function(s){
   const c=allContacts.find(x=>x.id===currentId);if(!c)return;
   c.statut=c.statut===s?'':s;
   update(ref(db,'contacts/'+c.id),c);selectContact(c);updateStats();renderList();toast('Statut mis a jour');
 };
-window.saveRDV=function(){
+window._saveRDV=window.saveRDV=function(){
   const c=allContacts.find(x=>x.id===currentId);if(!c)return;
   c.rdvDate=document.getElementById('rdv-date').value;
   c.rdvHeure=document.getElementById('rdv-heure').value;
@@ -669,7 +888,7 @@ window.saveRDV=function(){
 };
 
 let agentF='tous';
-window.showAgenda=function(){
+window._showAgenda=window.showAgenda=function(){
   document.getElementById('left').style.display='none';document.getElementById('right').style.display='none';document.getElementById('agenda').style.display='block';
   document.getElementById('btn-contacts').style.display='block';document.getElementById('btn-agenda').style.display='none';
   if(currentUser==='bresler'){agentF='Bresler';setAfBtn('br');}
@@ -677,12 +896,12 @@ window.showAgenda=function(){
   else{agentF='tous';setAfBtn('all');}
   renderAgenda();
 };
-window.showContacts=function(){
+window._showContacts=window.showContacts=function(){
   document.getElementById('left').style.display='flex';document.getElementById('right').style.display='block';document.getElementById('agenda').style.display='none';
   document.getElementById('btn-contacts').style.display='none';document.getElementById('btn-agenda').style.display='block';
 };
 function setAfBtn(w){['all','br','le'].forEach(k=>{const el=document.getElementById('af-'+k);if(el)el.className='af-btn'+(k===w?' active-'+w:'');});}
-window.agentFilter=function(agent,el){agentF=agent;const w=agent==='Bresler'?'br':agent==='Lefebvre'?'le':'all';setAfBtn(w);renderAgenda();};
+window._agentFilter=window.agentFilter=function(agent,el){agentF=agent;const w=agent==='Bresler'?'br':agent==='Lefebvre'?'le':'all';setAfBtn(w);renderAgenda();};
 
 function renderAgenda(){
   let list=allContacts.filter(c=>c.rdvDate&&c.rdvDate.trim());
@@ -707,7 +926,7 @@ function renderAgenda(){
   });
   document.getElementById('agenda-list').innerHTML=html;
 }
-window.openFromAgenda=function(id){const c=allContacts.find(x=>x.id===id);if(!c)return;showContacts();setTimeout(()=>selectContact(c),100);};
+window._openFromAgenda=window.openFromAgenda=function(id){const c=allContacts.find(x=>x.id===id);if(!c)return;showContacts();setTimeout(()=>selectContact(c),100);};
 
 function startChecker(){checkRDVs();setInterval(checkRDVs,60000);}
 function checkRDVs(){
@@ -728,7 +947,90 @@ function showPopup(c,mins){
   setTimeout(()=>document.getElementById('rdv-popup').style.display='none',30000);
 }
 
-window.exportData=function(){
+
+// ===== ZONES =====
+const ZONES = {
+  metro: {offset:2, label:'France Metropolitaine', prefixes:[]},  // CEST UTC+2
+  guad:  {offset:-4, label:'Guadeloupe', prefixes:['971']},
+  mart:  {offset:-4, label:'Martinique', prefixes:['972']},
+  reun:  {offset:4,  label:'La Reunion', prefixes:['974']},
+};
+let currentZone = 'metro';
+
+function getZoneTime(offsetHours) {
+  const now = new Date();
+  const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+  const zoneDate = new Date(utc + offsetHours * 3600000);
+  const h = String(zoneDate.getHours()).padStart(2,'0');
+  const m = String(zoneDate.getMinutes()).padStart(2,'0');
+  const s = String(zoneDate.getSeconds()).padStart(2,'0');
+  return {h:parseInt(h), m:parseInt(m), s, time:`${h}:${m}`, full:`${h}:${m}:${s}`};
+}
+
+function isOpen(h) { return h >= 9 && h < 19; }
+
+function updateClocks() {
+  const zones = {metro:2, guad:-4, mart:-4, reun:4};
+  Object.entries(zones).forEach(([key, offset]) => {
+    const t = getZoneTime(offset);
+    const timeEl = document.getElementById('zt-'+key);
+    const statEl = document.getElementById('zs-'+key);
+    if(timeEl) timeEl.textContent = t.time;
+    if(statEl) {
+      const open = isOpen(t.h);
+      statEl.textContent = open ? 'Ouvert' : 'Ferme';
+      statEl.className = 'zone-status ' + (open ? 'zone-open' : 'zone-closed');
+    }
+  });
+  // Main clock = current zone
+  const zoneOffset = {metro:2, guad:-4, mart:-4, reun:4}[currentZone];
+  const t = getZoneTime(zoneOffset);
+  const clockEl = document.getElementById('zone-main-clock');
+  const labelEl = document.getElementById('zone-main-label');
+  if(clockEl) clockEl.textContent = t.full;
+  if(labelEl) labelEl.textContent = ZONES[currentZone].label;
+}
+
+window._setZone = window.setZone = function(zone, el) {
+  currentZone = zone;
+  document.querySelectorAll('.zone-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  filterContacts();
+  updateClocks();
+};
+
+function getContactZone(c) {
+  // Check by code postal first
+  const cp = (c.cp || c.cpVille || '').toString().trim();
+  if(cp.startsWith('971')) return 'guad';
+  if(cp.startsWith('972')) return 'mart';
+  if(cp.startsWith('974')) return 'reun';
+
+  // Check by phone number prefixes
+  const tels = [c.tel1, c.tel2, c.telm].map(t => (t||'').toString().replace(/[\s\.\-\(\)]/g,''));
+  for(const t of tels) {
+    if(!t) continue;
+    // Reunion: 0262, +262, 00262
+    if(t.match(/^(0262|\+262|00262)/)) return 'reun';
+    // Guadeloupe: 0590, +590, 00590
+    if(t.match(/^(0590|\+590|00590)/)) return 'guad';
+    // Martinique: 0596, +596, 00596
+    if(t.match(/^(0596|\+596|00596)/)) return 'mart';
+    // Mobile Reunion: 0692, 0693
+    if(t.match(/^(0692|0693)/)) return 'reun';
+    // Mobile Guadeloupe: 0690, 0691
+    if(t.match(/^(0690|0691)/)) return 'guad';
+    // Mobile Martinique: 0696, 0697
+    if(t.match(/^(0696|0697)/)) return 'mart';
+  }
+  return 'metro';
+}
+
+// Start clock
+setInterval(updateClocks, 1000);
+updateClocks();
+
+window._exportData=window.exportData=function(){
   const fields=['nom','prenom','dateNaissance','tel1','tel2','telm','adresse1','cp','ville','compagnie','garantie','cotisation','nContrat','observation','rdvDate','rdvHeure','rdvAgent','statut'];
   const headers=['NOM','PRENOM','DDN','TEL1','TEL2','TELM','ADRESSE','CP','VILLE','COMPAGNIE','GARANTIE','COTISATION','N CONTRAT','OBSERVATION','DATE RDV','HEURE RDV','AGENT','STATUT'];
   let csv=headers.join(';')+'\n';
